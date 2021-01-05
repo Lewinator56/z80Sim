@@ -5,7 +5,7 @@ using System.Text;
 namespace z80CpuSim.CPU.Registers
 {
     /** Generic register class **/
-    class GenericRegister : Register
+    class GenericRegister : IRegister
     {
         private ushort data;
 
