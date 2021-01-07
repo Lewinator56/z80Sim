@@ -66,7 +66,7 @@ namespace z80CpuSim.CPU.Instructions
                     O = z80.B;
                     break;
                 case 0x46:
-                    I = new _16BitAbstractionRegister(z80.H, z80.L);
+                    I = new Pseudo16BitRegister(z80.H, z80.L);
                     O = z80.B;
                     break;
 

@@ -11,12 +11,12 @@ namespace z80CpuSim.CPU.Registers
     // and combines them for the set and get operations, implements the IRegister Interface so can be used with ANY 2 registers
     // the most likely use case is when using IX and IY registers, as these are considered IXL and IXH, IYL and IYH.
     
-    class _16BitAbstractionRegister : IRegister
+    class Pseudo16BitRegister : IRegister
     {
         GenericRegister lower;
         GenericRegister upper;
 
-        public _16BitAbstractionRegister(GenericRegister lower, GenericRegister upper)
+        public Pseudo16BitRegister(GenericRegister lower, GenericRegister upper)
         {
             this.lower = lower;
             this.upper = upper;

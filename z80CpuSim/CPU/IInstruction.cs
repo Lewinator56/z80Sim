@@ -8,6 +8,6 @@ namespace z80CpuSim.CPU
     {
         public bool CanHandle(byte opcode);
 
-        public void Handle(byte[] data);
+        public void Handle(byte[] data, ICPU CPU);
     }
 }

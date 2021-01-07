@@ -19,7 +19,7 @@ namespace z80CpuSim.CPU.Instructions
             return false;
         }
 
-        public void Handle(byte[] data)
+        public void Handle(byte[] data, ICPU CPU)
         {
 
         }
