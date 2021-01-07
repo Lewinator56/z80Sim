@@ -4,7 +4,7 @@ using System.Text;
 
 namespace z80CpuSim.CPU
 {
-    interface IRegister
+    interface IRegister : IMemoryType
     {
         // data field : ushort
         /** ushort becuse the program counter is 16 bits, and to avoid using generic types all the registers should be 16 bits, HOWEVER it should be implemented

@@ -4,9 +4,8 @@ using System.Text;
 
 namespace z80CpuSim.CPU
 {
-    interface IControlUnit
+    // Marker interface for memory types
+    interface IMemoryType
     {
-        // Begin program execution
-        public void StartExecution();
     }
 }

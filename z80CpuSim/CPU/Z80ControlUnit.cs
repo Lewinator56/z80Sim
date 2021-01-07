@@ -6,14 +6,9 @@ namespace z80CpuSim.CPU
 {
     class Z80ControlUnit : IControlUnit
     {
-        static int frequency;
-        public static void SetSpeed(int hertz)
-        {
-
-        }
-
+        Z80CPU z80CPU;
         // Start program execution
-        public static void BeginExecution()
+        public void StartExecution()
         {
 
         }

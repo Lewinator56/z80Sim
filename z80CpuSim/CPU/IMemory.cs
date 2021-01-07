@@ -7,7 +7,7 @@ namespace z80CpuSim.CPU
     /** Memory interface
      * Defines the core methods that any secodary memory type must use
      * */
-    interface IMemory
+    interface IMemory : IMemoryType
     {
         // Gets the data from the specified memory address, returns a byte as each memory address can only store a byte of data
         public byte GetAddress(UInt16 addr);
