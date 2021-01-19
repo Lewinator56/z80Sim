@@ -8,10 +8,17 @@ namespace z80CpuSim.CPU.Instructions
     {
         Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {
-            { 0x0F, 1 },
-            { 0x1F, 1 },
-            { 0x2F, 1 },
-            { 0x3F, 1 }, 
+            { 0x07, 1 }, // rlca
+            { 0x0F, 1 }, // rrca
+
+            { 0x1F, 1 }, // rra
+            { 0x17, 1 }, // rla
+
+            { 0x2F, 1 }, // cpl
+            { 0x27, 1 }, // daa
+
+            { 0x3F, 1 }, // ccf
+            { 0x37, 1 }, // scf
 
             { 0x76, 1 } // halt
         };
@@ -23,6 +30,11 @@ namespace z80CpuSim.CPU.Instructions
         public void Handle(byte[] data, ICPU CPU)
         {
 
+        }
+
+        public int GetBytesToRead(byte opcode)
+        {
+            return opcodes.GetValueOrDefault(opcode);
         }
     }
 }

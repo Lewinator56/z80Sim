@@ -30,5 +30,10 @@ namespace z80CpuSim.CPU.Instructions
         {
 
         }
+
+        public int GetBytesToRead(byte opcode)
+        {
+            return opcodes.GetValueOrDefault(opcode);
+        }
     }
 }

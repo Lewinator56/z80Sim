@@ -84,6 +84,11 @@ namespace z80CpuSim.CPU.Instructions
             UInt16 r = (UInt16)(cpu.A.GetData() ^ value);
             cpu.A.SetData(r);
         }
-        
+
+        public int GetBytesToRead(byte opcode)
+        {
+            return opcodes.GetValueOrDefault(opcode);
+        }
+
     }
 }
