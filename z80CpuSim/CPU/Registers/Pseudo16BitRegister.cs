@@ -25,8 +25,11 @@ namespace z80CpuSim.CPU.Registers
         // I better have got the endiness the correct way round here, i guess i'll find out when i test it, its not too hard to change
         public ushort GetData()
         {
-            byte lowerByte = BitConverter.GetBytes(lower.GetData())[1];
-            byte upperByte = BitConverter.GetBytes(upper.GetData())[1];
+            //byte lowerByte = BitConverter.GetBytes(lower.GetData())[1];
+            //byte upperByte = BitConverter.GetBytes(upper.GetData())[1];
+            // changed to eliminate some of the uncertainties about endiness
+            byte lowerByte = Convert.ToByte(lower.GetData());
+            byte upperByte = Convert.ToByte(upper.GetData());
             byte[] toReturn = { lowerByte, upperByte };
             return BitConverter.ToUInt16(toReturn);
         }

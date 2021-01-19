@@ -6,17 +6,22 @@ namespace z80CpuSim.CPU.Instructions
 {
     class Cp : IInstruction
     {
-        byte[] opcodes =
+        Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {
-            0xB8, 0xB9, 0xBA, 0xBB, 0xBC, 0xBD, 0xBE, 0xBF
+            { 0xB8, 1 },
+            { 0xB9, 1 },
+            { 0xBA, 1 },
+            { 0xBB, 1 },
+            { 0xBC, 1 },
+            { 0xBD, 1 },
+            { 0xBE, 1 },
+            { 0xBF, 1 },
+
+            { 0xFE, 2 }
         };
         public bool CanHandle(byte opcode)
         {
-            foreach (byte opc in opcodes)
-            {
-                if (opc == opcode) return true;
-            }
-            return false;
+            return opcodes.ContainsKey(opcode);
         }
 
         public void Handle(byte[] data, ICPU CPU)

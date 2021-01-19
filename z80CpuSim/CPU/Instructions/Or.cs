@@ -9,18 +9,24 @@ namespace z80CpuSim.CPU.Instructions
 {
     class Or : IInstruction
     {
-        byte[] opcodes =
+        // change to map
+
+
+        Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {
-            0xB0, 0xB1, 0xB2, 0xB3, 0xB4, 0xB5, 0xB6, 0xB7, 
-            0xF6
+            {0xB0, 1 },
+            {0xB1, 1 },
+            {0xB2, 1 },
+            {0xB3, 1 },
+            {0xB4, 1 },
+            {0xB5, 1 },
+            {0xB6, 1 },
+            {0xB7, 1 },
+            {0xF6, 2 }
         };
         public bool CanHandle(byte opcode)
         {
-            foreach (byte opc in opcodes)
-            {
-                if (opc == opcode) return true;
-            }
-            return false;
+            return opcodes.ContainsKey(opcode);
         }
 
         public void Handle(byte[] data, ICPU CPU)
@@ -70,11 +76,13 @@ namespace z80CpuSim.CPU.Instructions
         private void OrWithMemoryAtLocation(Pseudo16BitRegister reg, Z80CPU cpu)
         {
             UInt16 r = (UInt16)(cpu.A.GetData() ^ cpu.ram.GetAddress(reg.GetData()));
+            cpu.A.SetData(r);
         }
 
         private void OrWithValue(byte value, Z80CPU cpu)
         {
-
+            UInt16 r = (UInt16)(cpu.A.GetData() ^ value);
+            cpu.A.SetData(r);
         }
         
     }

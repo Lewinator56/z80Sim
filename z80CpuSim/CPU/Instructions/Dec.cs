@@ -4,20 +4,26 @@ using System.Text;
 
 namespace z80CpuSim.CPU.Instructions
 {
-    class Sbc : IInstruction
+    class Dec : IInstruction
     {
         Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {
-            { 0x98, 1 },
-            { 0x99, 1 },
-            { 0x9A, 1 },
-            { 0x9B, 1 },
-            { 0x9C, 1 },
-            { 0x9D, 1 },
-            { 0x9E, 1 },
-            { 0x9F, 1 },
+            { 0x05, 1 },
+            { 0x0B, 1 },
+            { 0x0d, 1 },
 
-            { 0xDE, 2 }
+            { 0x15, 1 },
+            { 0x1B, 1 },
+            { 0x1d, 1 },
+
+            { 0x25, 1 },
+            { 0x2B, 1 },
+            { 0x2d, 1 },
+
+            { 0x35, 1 },
+            { 0x3B, 1 },
+            { 0x3d, 1 }
+
         };
         public bool CanHandle(byte opcode)
         {

@@ -19,6 +19,7 @@ namespace z80CpuSim.CPU
         // Registers
         // 16 bit
         public ProgramCounter pc = new ProgramCounter();
+        
 
         // 8 bit
         public GenericRegister A = new GenericRegister();
@@ -35,12 +36,22 @@ namespace z80CpuSim.CPU
         public GenericRegister IYH = new GenericRegister();
         public GenericRegister IYL = new GenericRegister();
 
+        // busses (these dont really exist, but they are needed for inspection)
+        // they are GenericRegister types as the GenericRegister is 16 bits, and so can work as an 8
+        // or 16 bit register, obviously in this case, they are not resgiters, but represent the address and
+        // data lanes on the CPU
+        public GenericRegister addressBus = new GenericRegister(); // 16 bits
+        public GenericRegister dataBus = new GenericRegister(); // 8 bits
+
+        public Z80ControlUnit z80cu;
+
         bool tickInterrupt;
 
         // Constructor, sets up the RAM, and sets the initial frequency (though, this can be changed from the UI, this is just for instantiation)
         public Z80CPU(int ramSize, int frequency)
         {
             ram = new RAM(ramSize, new byte[0]);
+            z80cu = new Z80ControlUnit(this);
             SetSpeed(frequency);
         }
         // Not entirely sure if this is the best way of doing this, it will work, im just not sure how well.
