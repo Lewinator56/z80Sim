@@ -19,9 +19,10 @@ namespace z80CpuSim.CPU
         // Registers
         // 16 bit
         public ProgramCounter pc = new ProgramCounter();
+        public GenericRegister sp = new GenericRegister(); // stack pointer, this is a 16 bit register, GenericRegister by design is 16 bits
         
 
-        // 8 bit
+        // 8 bit - GenericRegister is treated as an 9 bit register in these cases
         public GenericRegister A = new GenericRegister();
         public GenericRegister B = new GenericRegister();
         public GenericRegister C = new GenericRegister();
@@ -40,6 +41,9 @@ namespace z80CpuSim.CPU
         // they are GenericRegister types as the GenericRegister is 16 bits, and so can work as an 8
         // or 16 bit register, obviously in this case, they are not resgiters, but represent the address and
         // data lanes on the CPU
+
+        // These will be cleared (well, set to 0) when they are supposed to hold no value (as shown in the manual, basically when the lines go low), though it is not explicitly required
+        // and will not affect operation of the simulated CPU, its just making sure it adheres to the timings and pin states specified in the manual
         public GenericRegister addressBus = new GenericRegister(); // 16 bits
         public GenericRegister dataBus = new GenericRegister(); // 8 bits
 

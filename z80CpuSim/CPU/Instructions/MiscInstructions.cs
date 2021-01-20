@@ -4,7 +4,7 @@ using System.Text;
 
 namespace z80CpuSim.CPU.Instructions
 {
-    class MiscInstructions
+    class MiscInstructions : IInstruction
     {
         Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {
