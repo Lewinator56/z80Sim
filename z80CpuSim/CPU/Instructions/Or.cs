@@ -29,60 +29,60 @@ namespace z80CpuSim.CPU.Instructions
             return opcodes.ContainsKey(opcode);
         }
 
-        public void Handle(byte[] data, ICPU CPU)
+        public void Handle(byte[] data)
         {
-            Z80CPU z80 = (Z80CPU)CPU;
+            Z80CPU z80 = Z80CPU.instance; // its just easier to type z80 rather than Z80CPU.instance
 
             switch (data[0])
             {
                 case 0xB0:
-                    OrWithRegister(z80.B, z80);
+                    OrWithRegister(z80.B);
                     break;
                 case 0xB1:
-                    OrWithRegister(z80.C, z80);
+                    OrWithRegister(z80.C);
                     break;
                 case 0xB2:
-                    OrWithRegister(z80.D, z80);
+                    OrWithRegister(z80.D);
                     break;
                 case 0xB3:
-                    OrWithRegister(z80.E, z80);
+                    OrWithRegister(z80.E);
                     break;
                 case 0xB4:
-                    OrWithRegister(z80.H, z80);
+                    OrWithRegister(z80.H);
                     break;
                 case 0xB5:
-                    OrWithRegister(z80.L, z80);
+                    OrWithRegister(z80.L);
                     break;
                 case 0xB6:
-                    OrWithMemoryAtLocation(new Pseudo16BitRegister(z80.H, z80.L), z80);
+                    OrWithMemoryAtLocation(new Pseudo16BitRegister(z80.H, z80.L));
                     break;
                 case 0xB7:
-                    OrWithRegister(z80.A, z80);
+                    OrWithRegister(z80.A);
                     break;
                 case 0XF6:
-                    OrWithValue(data[1], z80);
+                    OrWithValue(data[1]);
                     break;
             }
         }
 
-        private void OrWithRegister(GenericRegister reg, Z80CPU cpu)
+        private void OrWithRegister(GenericRegister reg)
         {
             // TODO : Change this to 'tick' 
-            UInt16 r = (UInt16)(reg.GetData() ^ cpu.A.GetData());
-            cpu.A.SetData(r);
+            UInt16 r = (UInt16)(reg.GetData() ^ Z80CPU.instance.A.GetData());
+            Z80CPU.instance.A.SetData(r);
             //
         }
 
-        private void OrWithMemoryAtLocation(Pseudo16BitRegister reg, Z80CPU cpu)
+        private void OrWithMemoryAtLocation(Pseudo16BitRegister reg)
         {
-            UInt16 r = (UInt16)(cpu.A.GetData() ^ cpu.ram.GetAddress(reg.GetData()));
-            cpu.A.SetData(r);
+            UInt16 r = (UInt16)(Z80CPU.instance.A.GetData() ^ Z80CPU.instance.ram.GetAddress(reg.GetData()));
+            Z80CPU.instance.A.SetData(r);
         }
 
-        private void OrWithValue(byte value, Z80CPU cpu)
+        private void OrWithValue(byte value)
         {
-            UInt16 r = (UInt16)(cpu.A.GetData() ^ value);
-            cpu.A.SetData(r);
+            UInt16 r = (UInt16)(Z80CPU.instance.A.GetData() ^ value);
+            Z80CPU.instance.A.SetData(r);
         }
 
         public int GetBytesToRead(byte opcode)

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 
 using z80CpuSim.CPU.Instructions;
+using z80CpuSim.CPU;
 
 namespace z80CpuSim.CPU
 {
     class Z80ControlUnit : IControlUnit
     {
-        Z80CPU z80CPU;
-
+        Z80CPU Z80;
         // list of the possible instructions
         IInstruction[] instructions = 
         {
@@ -41,9 +41,9 @@ namespace z80CpuSim.CPU
 
 
         // Start program execution
-        public Z80ControlUnit(Z80CPU cpu)
+        public Z80ControlUnit()
         {
-            this.z80CPU = cpu;
+            this.Z80 = Z80CPU.instance
         }
         public void StartExecution()
         {
@@ -59,22 +59,22 @@ namespace z80CpuSim.CPU
         // like; giving me the ability to sample the busses with a constant access point throughout execution
         public void Fetch()
         {
-            z80CPU.Tick();
+            Z80.Tick();
             // get the memory address from the program counter and set the addsress bus to this 
-            z80CPU.addressBus.SetData(z80CPU.pc.GetData());
-            z80CPU.Tick();
+            Z80.addressBus.SetData(Z80.PC.GetData());
+            Z80.Tick();
             // get the opcode from RAM that the address bus points to
-            z80CPU.dataBus.SetData(z80CPU.ram.GetAddress(z80CPU.addressBus.GetData()));
+            Z80.dataBus.SetData(Z80.ram.GetAddress(Z80.addressBus.GetData()));
             // tick before decoding akes place
-            z80CPU.Tick();
+            Z80.Tick();
             // decode the instruction
-            byte opcode = Convert.ToByte(z80CPU.dataBus.GetData());
+            byte opcode = Convert.ToByte(Z80.dataBus.GetData());
             IInstruction instruction = Decode(opcode);
-            z80CPU.Tick();
+            Z80.Tick();
 
             // Clear the data and address busses (this actually works for the refersh address anyway for the address bus)
-            z80CPU.addressBus.SetData(0);
-            z80CPU.dataBus.SetData(0);
+            Z80.addressBus.SetData(0);
+            Z80.dataBus.SetData(0);
 
             // execute the instruction
             Execute(instruction, opcode);
@@ -99,27 +99,28 @@ namespace z80CpuSim.CPU
 
 
                 // TODO : Determine if my ticks are correct, it would seem that they are however
-                z80CPU.Tick();
-                z80CPU.pc.Increment();
+                Z80.Tick();
+                Z80.PC.Increment();
 
-                z80CPU.Tick();
-                z80CPU.addressBus.SetData(z80CPU.pc.GetData());
+                Z80.Tick();
+                Z80.addressBus.SetData(Z80.PC.GetData());
 
-                z80CPU.Tick();
-                z80CPU.dataBus.SetData(z80CPU.ram.GetAddress(z80CPU.addressBus.GetData()));
+                Z80.Tick();
+                Z80.dataBus.SetData(Z80.ram.GetAddress(Z80.addressBus.GetData()));
 
-                byte data = Convert.ToByte(z80CPU.dataBus.GetData());
+                Z80.Tick();
+                byte data = Convert.ToByte(Z80.dataBus.GetData());
                 instructionData.Add(data);
 
                 // Clear the data and address busses
-                z80CPU.addressBus.SetData(0);
-                z80CPU.dataBus.SetData(0);
+                Z80.addressBus.SetData(0);
+                Z80.dataBus.SetData(0);
 
             }
             // convert the list into an array to pass to IInstruction.Handle()
             // this array if formated like so:
             // { opcode , extra byte 1, extra byte 2 }
-            instruction.Handle(instructionData.ToArray(), z80CPU);
+            instruction.Handle(instructionData.ToArray());
             
         }
 
@@ -134,6 +135,38 @@ namespace z80CpuSim.CPU
                 }
             }
             return null;
+        }
+
+        // Read data from memory
+        // The address bus is set to the address to read, 2 ticks elapse before the memory responds, 
+        // The data is then read, and will be visible for inspection on the 3rd tick
+        public byte ReadMemory(UInt16 address)
+        {
+            Z80.addressBus.SetData(address);
+            Z80.Tick();
+            Z80.Tick();
+
+            Z80.dataBus.SetData(Z80.ram.GetAddress(Z80.addressBus.GetData()));
+            Z80.Tick();
+
+            return (byte)Z80.dataBus.GetData();
+        }
+
+        // Write data to memory
+        // the address bus is placed on the address to write, a single tick occurs before the data
+        // is sent, at which point im setting the data bus, another tick occurs before its actually written to the
+        // RAM, the data is visible in RAM after the 3rd tick
+        public void WriteMemory(UInt16 address, byte data)
+        {
+            Z80.addressBus.SetData(address);
+            Z80.Tick();
+
+            Z80.dataBus.SetData(data);
+            Z80.Tick();
+
+            Z80.ram.SetAddress(Z80.addressBus.GetData(), (byte)Z80.dataBus.GetData());
+            Z80.Tick();
+
         }
     }
 }

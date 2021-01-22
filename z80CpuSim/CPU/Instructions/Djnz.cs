@@ -9,12 +9,13 @@ namespace z80CpuSim.CPU.Instructions
         Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {
             { 0x10, 2 }
+        };
         public bool CanHandle(byte opcode)
         {
             return opcodes.ContainsKey(opcode);
         }
 
-        public void Handle(byte[] data, ICPU CPU)
+        public void Handle(byte[] data)
         {
 
         }

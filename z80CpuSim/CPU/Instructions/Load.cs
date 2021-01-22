@@ -112,7 +112,7 @@ namespace z80CpuSim.CPU.Instructions
             return opcodes.ContainsKey(opcode);
         }
 
-        public void Handle(byte[] data, ICPU CPU)
+        public void Handle(byte[] data)
         {
             // These are here to allow for registers AND RAM to be written to, bear in mind however, if accessing IX and IY, these are combinations of IXL, IXH, IYL, ILH
             // and will actually require another specific definition of a GenericRegister further down. For most cases, this will not be required, and the use of an IMemoryType
@@ -120,36 +120,29 @@ namespace z80CpuSim.CPU.Instructions
             IMemoryType O; // single register/address output
             IMemoryType I; // single register/address input
 
-            Z80CPU z80 = (Z80CPU)CPU;
+            Z80CPU z80 = Z80CPU.instance; // im too lazy to go through and replace all the z80's with Z80CPU.instance
 
             switch (data[0]) {
                 case 0x40:
-                    I = z80.B;
-                    O = z80.B;
+                    LoadRToR(z80.B, z80.B);
                     break;
                 case 0x41:
-                    I = z80.C;
-                    O = z80.B;
+                    LoadRToR(z80.C, z80.B);
                     break;
                 case 0x42:
-                    I = z80.D;
-                    O = z80.B;
+                    LoadRToR(z80.D, z80.B);
                     break;
                 case 0x43:
-                    I = z80.E;
-                    O = z80.B;
+                    LoadRToR(z80.E, z80.B);
                     break;
                 case 0x44:
-                    I = z80.H;
-                    O = z80.B;
+                    LoadRToR(z80.H, z80.B);
                     break;
                 case 0x45:
-                    I = z80.L;
-                    O = z80.B;
+                    LoadRToR(z80.L, z80.B);
                     break;
                 case 0x46:
-                    I = new Pseudo16BitRegister(z80.H, z80.L);
-                    O = z80.B;
+                    LoadDataAtAddressToR(new Pseudo16BitRegister(z80.H, z80.L), z80.B);
                     break;
 
             }
@@ -157,6 +150,24 @@ namespace z80CpuSim.CPU.Instructions
 
 
         }
+
+        private void LoadRToR(GenericRegister i, GenericRegister o)
+        {
+            // TODO : Ticks
+            i.SetData(o.GetData());
+            
+        }
+
+        private void LoadDataAtAddressToR(Pseudo16BitRegister i, GenericRegister o)
+        {
+            // TODO : Ticks
+            i.SetData(Z80CPU.instance.ram.GetAddress(o.GetData()));
+        }
+
+        
+
+
+        
         public int GetBytesToRead(byte opcode)
         {
             return opcodes.GetValueOrDefault(opcode);

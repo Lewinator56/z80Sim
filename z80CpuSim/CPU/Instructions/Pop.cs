@@ -22,7 +22,7 @@ namespace z80CpuSim.CPU.Instructions
             return opcodes.ContainsKey(opcode);
         }
 
-        public void Handle(byte[] data, ICPU CPU)
+        public void Handle(byte[] data)
         {
 
         }

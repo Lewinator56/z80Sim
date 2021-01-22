@@ -11,15 +11,24 @@ using z80CpuSim.CPU.Registers;
 
 namespace z80CpuSim.CPU
 {
-    class Z80CPU : ICPU
+    sealed class Z80CPU : ICPU
     {
+        //
+        // Implement the singleton approach, this ensures there will only ever be ONE instance of the CPU class
+        //
+        private static readonly Lazy<Z80CPU> lazySingleton = new Lazy<Z80CPU>(() => new Z80CPU(65535, 1));
+        public static Z80CPU instance { get { return lazySingleton.Value; } }
+        //
+        //
+
+
         int frequency;
         public RAM ram;
 
         // Registers
         // 16 bit
-        public ProgramCounter pc = new ProgramCounter();
-        public GenericRegister sp = new GenericRegister(); // stack pointer, this is a 16 bit register, GenericRegister by design is 16 bits
+        public ProgramCounter PC = new ProgramCounter();
+        public GenericRegister SP = new GenericRegister(); // stack pointer, this is a 16 bit register, GenericRegister by design is 16 bits
         
 
         // 8 bit - GenericRegister is treated as an 9 bit register in these cases
@@ -28,6 +37,7 @@ namespace z80CpuSim.CPU
         public GenericRegister C = new GenericRegister();
         public GenericRegister D = new GenericRegister();
         public GenericRegister E = new GenericRegister();
+        public GenericRegister F = new GenericRegister(); // flags register
         public GenericRegister H = new GenericRegister();
         public GenericRegister L = new GenericRegister();
         public GenericRegister I = new GenericRegister();
@@ -36,6 +46,16 @@ namespace z80CpuSim.CPU
         public GenericRegister IXL = new GenericRegister();
         public GenericRegister IYH = new GenericRegister();
         public GenericRegister IYL = new GenericRegister();
+
+        // 16 bit registers as 8 bit pairs
+        public Pseudo16BitRegister AF = new Pseudo16BitRegister(Z80CPU.instance.A, Z80CPU.instance.F);
+        public Pseudo16BitRegister BC = new Pseudo16BitRegister(Z80CPU.instance.B, Z80CPU.instance.C);
+        public Pseudo16BitRegister DE = new Pseudo16BitRegister(Z80CPU.instance.D, Z80CPU.instance.E);
+        public Pseudo16BitRegister HL = new Pseudo16BitRegister(Z80CPU.instance.H, Z80CPU.instance.L);
+
+        
+        
+
 
         // busses (these dont really exist, but they are needed for inspection)
         // they are GenericRegister types as the GenericRegister is 16 bits, and so can work as an 8
@@ -48,14 +68,20 @@ namespace z80CpuSim.CPU
         public GenericRegister dataBus = new GenericRegister(); // 8 bits
 
         public Z80ControlUnit z80cu;
+        
 
-        bool tickInterrupt;
+        bool tickInterrupt; // controls if the CPU should pause execution, this is NOT a wait state
+
+
+        // pins
+        bool wait = false;
+        
 
         // Constructor, sets up the RAM, and sets the initial frequency (though, this can be changed from the UI, this is just for instantiation)
         public Z80CPU(int ramSize, int frequency)
         {
             ram = new RAM(ramSize, new byte[0]);
-            z80cu = new Z80ControlUnit(this);
+            z80cu = new Z80ControlUnit();
             SetSpeed(frequency);
         }
         // Not entirely sure if this is the best way of doing this, it will work, im just not sure how well.
@@ -70,6 +96,13 @@ namespace z80CpuSim.CPU
                 // infinite loop on this thread!
             }
             Thread.Sleep(1000 / frequency); // I can guarantee this will cause a problem, ive never got this running at the correct time in the past, but i guess we'll just have top wait and see
+
+            // check the wait state, if we need to wait, tick untill the wait pin is low
+            while (wait)
+            {
+                // note that calling Tick() allows for execution to be paused during a wait state
+                Tick(); 
+            }
 
         }
 
