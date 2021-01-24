@@ -11,6 +11,17 @@ using z80CpuSim.CPU.Registers;
 
 namespace z80CpuSim.CPU
 {
+    public enum FlagBit
+    {
+        Carry, 
+        Subtract, 
+        Parity, 
+        F3,
+        HalfCarry, 
+        F5, 
+        Zero, 
+        Sign
+    }
     sealed class Z80CPU : ICPU
     {
         //
@@ -67,7 +78,7 @@ namespace z80CpuSim.CPU
         public GenericRegister addressBus = new GenericRegister(); // 16 bits
         public GenericRegister dataBus = new GenericRegister(); // 8 bits
 
-        public Z80ControlUnit z80cu;
+        public Z80ControlUnit Z80cu;
         
 
         bool tickInterrupt; // controls if the CPU should pause execution, this is NOT a wait state
@@ -81,7 +92,7 @@ namespace z80CpuSim.CPU
         public Z80CPU(int ramSize, int frequency)
         {
             ram = new RAM(ramSize, new byte[0]);
-            z80cu = new Z80ControlUnit();
+            Z80cu = new Z80ControlUnit();
             SetSpeed(frequency);
         }
         // Not entirely sure if this is the best way of doing this, it will work, im just not sure how well.

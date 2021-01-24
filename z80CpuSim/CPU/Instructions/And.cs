@@ -31,7 +31,36 @@ namespace z80CpuSim.CPU.Instructions
 
         public void Handle(byte[] data)
         {
-
+            switch (data[0])
+            {
+                case 0xA0:
+                    AndRwithA(Z80.B);
+                    break;
+                case 0xA1:
+                    AndRwithA(Z80.C);
+                    break;
+                case 0xA2:
+                    AndRwithA(Z80.D);
+                    break;
+                case 0xA3:
+                    AndRwithA(Z80.E);
+                    break;
+                case 0xA4:
+                    AndRwithA(Z80.H);
+                    break;
+                case 0xA5:
+                    AndRwithA(Z80.L);
+                    break;
+                case 0xA6:
+                    AndAddressWithA();
+                    break;
+                case 0xA7:
+                    AndRwithA(Z80.A);
+                    break;
+                case 0xE6:
+                    AndValueWithA(data[1]);
+                    break;
+            }
         }
         public int GetBytesToRead(byte opcode)
         {
@@ -45,15 +74,42 @@ namespace z80CpuSim.CPU.Instructions
         private void AndRwithA(GenericRegister i)
         {
             Z80.A.SetData((UInt16)(Z80.A.GetData() & i.GetData()));
+            SetFlagStates();
         }
 
         private void AndAddressWithA()
         {
+            byte a = Z80.Z80cu.ReadMemory(Z80.HL.GetData());
+            Z80.A.SetData((UInt16)(a & Z80.A.GetData()));
+            SetFlagStates();
+
 
         }
 
         private void AndValueWithA(byte value)
         {
+            Z80.A.SetData((UInt16)(Z80.A.GetData() & value));
+            SetFlagStates();
+        }
+
+        private void SetFlagStates()
+        {
+            // Set or reset S, 0x80 is 128, this is the 7th value in the A register, if it is 1 the value is negative and the bit is set
+            Z80.Z80cu.SetFlagBit(FlagBit.Sign, (Z80.A.GetData() & 0x80) == 0x80);
+
+            // Set or reset Z, 0x00 is 0, this checks if A is equal to 0 (guess i could have just done A == 0) 
+            Z80.Z80cu.SetFlagBit(FlagBit.Zero, (Z80.A.GetData() & 0x00) == 0x00);
+
+            // set H
+            Z80.Z80cu.SetFlagBit(FlagBit.HalfCarry, true);
+
+            // Reset P/V
+            Z80.Z80cu.SetFlagBit(FlagBit.Parity, false);
+
+            // reset N
+            Z80.Z80cu.SetFlagBit(FlagBit.Subtract, false);
+            //reset C
+            Z80.Z80cu.SetFlagBit(FlagBit.Carry, false);
 
         }
     }

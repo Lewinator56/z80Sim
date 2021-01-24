@@ -47,7 +47,7 @@ namespace z80CpuSim.CPU.Instructions
                     Add16BitTo16Bit(Z80.HL, Z80.HL);
                     break;
                 case 0x39:
-                    Add16BitTo16Bit(Z80.SP, Z80.HL); // TODO : fix for true 16 bit registers
+                    //Add16BitTo16Bit(Z80.SP, Z80.HL); // TODO : fix for true 16 bit registers
                     break;
                 case 0x80:
                     AddRToA(Z80.B);
@@ -108,7 +108,7 @@ namespace z80CpuSim.CPU.Instructions
 
             // Changed to utilize the new ReadMemory method
 
-            UInt16 a = Z80.z80cu.ReadMemory(Z80.HL.GetData());
+            UInt16 a = Z80.Z80cu.ReadMemory(Z80.HL.GetData());
 
             // 3 ticks have elapsed now
             UInt16 b = Z80.A.GetData();

@@ -43,7 +43,7 @@ namespace z80CpuSim.CPU
         // Start program execution
         public Z80ControlUnit()
         {
-            this.Z80 = Z80CPU.instance
+            this.Z80 = Z80CPU.instance;
         }
         public void StartExecution()
         {
@@ -167,6 +167,30 @@ namespace z80CpuSim.CPU
             Z80.ram.SetAddress(Z80.addressBus.GetData(), (byte)Z80.dataBus.GetData());
             Z80.Tick();
 
+        }
+
+        // flag setting
+        // This is here because its easier, clearer to read AND better practice (because im not typing the same 
+        // code over and over again) to set flags with this.
+        // The enumeration expects a flag bit identifier, these can be found in the Z80CPU file, but not in the 
+        // class,.
+        public void SetFlagBit(FlagBit bit, bool set)
+        {
+            
+            if (set)
+            {
+                // Set a bit to 1, this ORs the current state of the register with the correct
+                // integer value calculated by 2 ^ bit flag value
+                // these values will be numbers represented by 1 at the index of the bit flag
+                Z80.F.SetData((UInt16)(Z80.F.GetData() | 2 ^ (UInt16)bit));
+            } else
+            {
+                // Reset the flag bit, uses a bit shift by the number of the bit index in the 
+                // flag register, which is the enum value, to specify the number of times to shift the bit
+                UInt16 n = Z80.F.GetData();
+                n = (UInt16)(n & ~(1U << (UInt16)bit));
+                Z80.F.SetData(n);
+            }
         }
     }
 }
