@@ -9,8 +9,8 @@ namespace z80CpuSim.CPU.Instructions
 {
     class Or : IInstruction
     {
-        // change to map
 
+        Z80CPU Z80 = Z80CPU.instance; // its just easier to type z80 rather than Z80CPU.instance
 
         Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {
@@ -31,63 +31,86 @@ namespace z80CpuSim.CPU.Instructions
 
         public void Handle(byte[] data)
         {
-            Z80CPU z80 = Z80CPU.instance; // its just easier to type z80 rather than Z80CPU.instance
+            
 
             switch (data[0])
             {
                 case 0xB0:
-                    OrWithRegister(z80.B);
+                    OrRWithA(Z80.B);
                     break;
                 case 0xB1:
-                    OrWithRegister(z80.C);
+                    OrRWithA(Z80.C);
                     break;
                 case 0xB2:
-                    OrWithRegister(z80.D);
+                    OrRWithA(Z80.D);
                     break;
                 case 0xB3:
-                    OrWithRegister(z80.E);
+                    OrRWithA(Z80.E);
                     break;
                 case 0xB4:
-                    OrWithRegister(z80.H);
+                    OrRWithA(Z80.H);
                     break;
                 case 0xB5:
-                    OrWithRegister(z80.L);
+                    OrRWithA(Z80.L);
                     break;
                 case 0xB6:
-                    OrWithMemoryAtLocation(new Pseudo16BitRegister(z80.H, z80.L));
+                    OrAddressWithA();
                     break;
                 case 0xB7:
-                    OrWithRegister(z80.A);
+                    OrRWithA(Z80.A);
                     break;
                 case 0XF6:
-                    OrWithValue(data[1]);
+                    OrValueWithA(data[1]);
                     break;
             }
         }
 
-        private void OrWithRegister(GenericRegister reg)
-        {
-            // TODO : Change this to 'tick' 
-            UInt16 r = (UInt16)(reg.GetData() ^ Z80CPU.instance.A.GetData());
-            Z80CPU.instance.A.SetData(r);
-            //
-        }
-
-        private void OrWithMemoryAtLocation(Pseudo16BitRegister reg)
-        {
-            UInt16 r = (UInt16)(Z80CPU.instance.A.GetData() ^ Z80CPU.instance.ram.GetAddress(reg.GetData()));
-            Z80CPU.instance.A.SetData(r);
-        }
-
-        private void OrWithValue(byte value)
-        {
-            UInt16 r = (UInt16)(Z80CPU.instance.A.GetData() ^ value);
-            Z80CPU.instance.A.SetData(r);
-        }
 
         public int GetBytesToRead(byte opcode)
         {
             return opcodes.GetValueOrDefault(opcode);
+        }
+
+        private void OrRWithA(GenericRegister i)
+        {
+            Z80.A.SetData((UInt16)(Z80.A.GetData() | i.GetData()));
+            SetFlagStates();
+        }
+
+        private void OrAddressWithA()
+        {
+            byte a = Z80.Z80cu.ReadMemory(Z80.HL.GetData());
+            Z80.A.SetData((UInt16)(a | Z80.A.GetData()));
+            SetFlagStates();
+
+
+        }
+
+        private void OrValueWithA(byte value)
+        {
+            Z80.A.SetData((UInt16)(Z80.A.GetData() | value));
+            SetFlagStates();
+        }
+
+        private void SetFlagStates()
+        {
+            // Set or reset S, 0x80 is 128, this is the 7th value in the A register, if it is 1 the value is negative and the bit is set
+            Z80.Z80cu.SetFlagBit(FlagBit.Sign, (Z80.A.GetData() & 0x80) == 0x80);
+
+            // Set or reset Z, 0x00 is 0, this checks if A is equal to 0 (guess i could have just done A == 0) 
+            Z80.Z80cu.SetFlagBit(FlagBit.Zero, (Z80.A.GetData() & 0x00) == 0x00);
+
+            // set H
+            Z80.Z80cu.SetFlagBit(FlagBit.HalfCarry, true);
+
+            // Reset P/V
+            Z80.Z80cu.SetFlagBit(FlagBit.Parity, false);
+
+            // reset N
+            Z80.Z80cu.SetFlagBit(FlagBit.Subtract, false);
+            //reset C
+            Z80.Z80cu.SetFlagBit(FlagBit.Carry, false);
+
         }
 
     }
