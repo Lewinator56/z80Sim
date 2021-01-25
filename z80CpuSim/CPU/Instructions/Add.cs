@@ -84,18 +84,18 @@ namespace z80CpuSim.CPU.Instructions
         }
 
         // TODO : tick timings
-        private void AddRToA(GenericRegister i)
+        private void AddRToA(EightBitRegister i)
         {
 
-            UInt16 a = i.GetData();
-            UInt16 b = Z80.A.GetData();
+            ushort a = i.GetData();
+            ushort b = Z80.A.GetData();
 
-            UInt16 r = (UInt16)(a + b);
+            ushort r = (ushort)(a + b);
             if (r > 255)
             {
-                Z80.F.SetData((UInt16)(Z80.F.GetData() | (UInt16)0x0001)); // carry flag
+                Z80.F.SetData((byte)(Z80.F.GetData() | (byte)0x01)); // carry flag
             }
-            Z80.A.SetData(r);
+            Z80.A.SetData((byte)r);
 
 
         }
@@ -108,31 +108,31 @@ namespace z80CpuSim.CPU.Instructions
 
             // Changed to utilize the new ReadMemory method
 
-            UInt16 a = Z80.Z80cu.ReadMemory(Z80.HL.GetData());
+            ushort a = Z80.Z80cu.ReadMemory(Z80.HL.GetData());
 
             // 3 ticks have elapsed now
-            UInt16 b = Z80.A.GetData();
+            ushort b = Z80.A.GetData();
 
-            UInt16 r = (UInt16)(a + b);
+            ushort r = (ushort)(a + b);
             if (r > 255)
             {
-                Z80.F.SetData((UInt16)(Z80.F.GetData() | (UInt16)0x0001)); // carry flag
+                Z80.F.SetData((byte)(Z80.F.GetData() | (byte)0x01)); // carry flag
             }
-            Z80.A.SetData(r);
+            Z80.A.SetData((byte)r);
         }
 
         private void AddValueToA(byte value)
         {
-            UInt16 b = Z80.A.GetData();
-            UInt16 r = (UInt16)(b + value);
+            ushort b = Z80.A.GetData();
+            ushort r = (ushort)(b + value);
             if (r > 255)
             {
-                Z80.F.SetData((UInt16)(Z80.F.GetData() | (UInt16)0x0001)); // carry flag
+                Z80.F.SetData((byte)(Z80.F.GetData() | (byte)0x01)); // carry flag
             }
-            Z80.A.SetData(r);
+            Z80.A.SetData((byte)r);
         }
 
-        private void Add16BitTo16Bit(Pseudo16BitRegister i, Pseudo16BitRegister o)
+        private void Add16BitTo16Bit(EightBitRegisterPair i, EightBitRegisterPair o)
         {
             // TODO : write this
         }

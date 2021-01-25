@@ -39,44 +39,44 @@ namespace z80CpuSim.CPU
         // Registers
         // 16 bit
         public ProgramCounter PC = new ProgramCounter();
-        public GenericRegister SP = new GenericRegister(); // stack pointer, this is a 16 bit register, GenericRegister by design is 16 bits
+        public SixteenBitRegister SP = new SixteenBitRegister(); // stack pointer, this is a 16 bit register, EightBitRegister by design is 16 bits
         
 
-        // 8 bit - GenericRegister is treated as an 9 bit register in these cases
-        public GenericRegister A = new GenericRegister();
-        public GenericRegister B = new GenericRegister();
-        public GenericRegister C = new GenericRegister();
-        public GenericRegister D = new GenericRegister();
-        public GenericRegister E = new GenericRegister();
-        public GenericRegister F = new GenericRegister(); // flags register
-        public GenericRegister H = new GenericRegister();
-        public GenericRegister L = new GenericRegister();
-        public GenericRegister I = new GenericRegister();
-        public GenericRegister R = new GenericRegister();
-        public GenericRegister IXH = new GenericRegister();
-        public GenericRegister IXL = new GenericRegister();
-        public GenericRegister IYH = new GenericRegister();
-        public GenericRegister IYL = new GenericRegister();
+        // 8 bit - EightBitRegister is treated as an 9 bit register in these cases
+        public EightBitRegister A = new EightBitRegister();
+        public EightBitRegister B = new EightBitRegister();
+        public EightBitRegister C = new EightBitRegister();
+        public EightBitRegister D = new EightBitRegister();
+        public EightBitRegister E = new EightBitRegister();
+        public EightBitRegister F = new EightBitRegister(); // flags register
+        public EightBitRegister H = new EightBitRegister();
+        public EightBitRegister L = new EightBitRegister();
+        public EightBitRegister I = new EightBitRegister();
+        public EightBitRegister R = new EightBitRegister();
+        public EightBitRegister IXH = new EightBitRegister();
+        public EightBitRegister IXL = new EightBitRegister();
+        public EightBitRegister IYH = new EightBitRegister();
+        public EightBitRegister IYL = new EightBitRegister();
 
         // 16 bit registers as 8 bit pairs
-        public Pseudo16BitRegister AF = new Pseudo16BitRegister(Z80CPU.instance.A, Z80CPU.instance.F);
-        public Pseudo16BitRegister BC = new Pseudo16BitRegister(Z80CPU.instance.B, Z80CPU.instance.C);
-        public Pseudo16BitRegister DE = new Pseudo16BitRegister(Z80CPU.instance.D, Z80CPU.instance.E);
-        public Pseudo16BitRegister HL = new Pseudo16BitRegister(Z80CPU.instance.H, Z80CPU.instance.L);
+        public EightBitRegisterPair AF = new EightBitRegisterPair(Z80CPU.instance.A, Z80CPU.instance.F);
+        public EightBitRegisterPair BC = new EightBitRegisterPair(Z80CPU.instance.B, Z80CPU.instance.C);
+        public EightBitRegisterPair DE = new EightBitRegisterPair(Z80CPU.instance.D, Z80CPU.instance.E);
+        public EightBitRegisterPair HL = new EightBitRegisterPair(Z80CPU.instance.H, Z80CPU.instance.L);
 
         
         
 
 
         // busses (these dont really exist, but they are needed for inspection)
-        // they are GenericRegister types as the GenericRegister is 16 bits, and so can work as an 8
+        // they are EightBitRegister types as the EightBitRegister is 16 bits, and so can work as an 8
         // or 16 bit register, obviously in this case, they are not resgiters, but represent the address and
         // data lanes on the CPU
 
         // These will be cleared (well, set to 0) when they are supposed to hold no value (as shown in the manual, basically when the lines go low), though it is not explicitly required
         // and will not affect operation of the simulated CPU, its just making sure it adheres to the timings and pin states specified in the manual
-        public GenericRegister addressBus = new GenericRegister(); // 16 bits
-        public GenericRegister dataBus = new GenericRegister(); // 8 bits
+        public SixteenBitRegister addressBus = new SixteenBitRegister(); // 16 bits
+        public EightBitRegister dataBus = new EightBitRegister(); // 8 bits
 
         public Z80ControlUnit Z80cu;
         

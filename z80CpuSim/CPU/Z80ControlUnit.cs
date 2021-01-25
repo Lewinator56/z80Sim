@@ -146,7 +146,7 @@ namespace z80CpuSim.CPU
         // Read data from memory
         // The address bus is set to the address to read, 2 ticks elapse before the memory responds, 
         // The data is then read, and will be visible for inspection on the 3rd tick
-        public byte ReadMemory(UInt16 address)
+        public byte ReadMemory(ushort address)
         {
             Z80.addressBus.SetData(address);
             Z80.Tick();
@@ -162,7 +162,7 @@ namespace z80CpuSim.CPU
         // the address bus is placed on the address to write, a single tick occurs before the data
         // is sent, at which point im setting the data bus, another tick occurs before its actually written to the
         // RAM, the data is visible in RAM after the 3rd tick
-        public void WriteMemory(UInt16 address, byte data)
+        public void WriteMemory(ushort address, byte data)
         {
             Z80.addressBus.SetData(address);
             Z80.Tick();
@@ -190,13 +190,13 @@ namespace z80CpuSim.CPU
                 // these values will be numbers represented by 1 at the index of the bit flag
                 // Using my custom power method here because i CANNOT use the .net one, since it expects
                 // doubles, and i CANNOT under eny circumstances use doubles
-                Z80.F.SetData((UInt16)(Z80.F.GetData() | (UInt16)IntegerMath.Pow(2, (UInt16)bit)));
+                Z80.F.SetData((byte)(Z80.F.GetData() | (byte)IntegerMath.Pow(2, (byte)bit)));
             } else
             {
                 // Reset the flag bit, uses a bit shift by the number of the bit index in the 
                 // flag register, which is the enum value, to specify the number of times to shift the bit
-                UInt16 n = Z80.F.GetData();
-                n = (UInt16)(n & ~(1U << (UInt16)bit));
+                byte n = Z80.F.GetData();
+                n = (byte)(n & ~(1U << (byte)bit));
                 Z80.F.SetData(n);
             }
         }

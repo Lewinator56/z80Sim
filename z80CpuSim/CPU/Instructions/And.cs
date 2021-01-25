@@ -71,16 +71,16 @@ namespace z80CpuSim.CPU.Instructions
         // A single M-cycle of 4 T-states, which is the time taken to fetch and decode an
         // instruction, subsequently, since 4 Ticks() have already elapsed, this is going to run
         // as if it ran within those execution ticks, so there are no Ticks()
-        private void AndRwithA(GenericRegister i)
+        private void AndRwithA(EightBitRegister i)
         {
-            Z80.A.SetData((UInt16)(Z80.A.GetData() & i.GetData()));
+            Z80.A.SetData((byte)(Z80.A.GetData() & i.GetData()));
             SetFlagStates();
         }
 
         private void AndAddressWithA()
         {
             byte a = Z80.Z80cu.ReadMemory(Z80.HL.GetData());
-            Z80.A.SetData((UInt16)(a & Z80.A.GetData()));
+            Z80.A.SetData((byte)(a & Z80.A.GetData()));
             SetFlagStates();
 
 
@@ -88,7 +88,7 @@ namespace z80CpuSim.CPU.Instructions
 
         private void AndValueWithA(byte value)
         {
-            Z80.A.SetData((UInt16)(Z80.A.GetData() & value));
+            Z80.A.SetData((byte)(Z80.A.GetData() & value));
             SetFlagStates();
         }
 

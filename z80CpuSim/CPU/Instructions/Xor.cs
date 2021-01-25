@@ -40,16 +40,16 @@ namespace z80CpuSim.CPU.Instructions
         }
 
 
-        private void XorRWithA(GenericRegister i)
+        private void XorRWithA(EightBitRegister i)
         {
-            Z80.A.SetData((UInt16)(Z80.A.GetData() ^ i.GetData()));
+            Z80.A.SetData((byte)(Z80.A.GetData() ^ i.GetData()));
             SetFlagStates();
         }
 
         private void XorAddressWithA()
         {
             byte a = Z80.Z80cu.ReadMemory(Z80.HL.GetData());
-            Z80.A.SetData((UInt16)(a ^ Z80.A.GetData()));
+            Z80.A.SetData((byte)(a ^ Z80.A.GetData()));
             SetFlagStates();
 
 
@@ -57,7 +57,7 @@ namespace z80CpuSim.CPU.Instructions
 
         private void XorValueWithA(byte value)
         {
-            Z80.A.SetData((UInt16)(Z80.A.GetData() ^ value));
+            Z80.A.SetData((byte)(Z80.A.GetData() ^ value));
             SetFlagStates();
         }
 

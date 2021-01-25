@@ -11,12 +11,12 @@ namespace z80CpuSim.CPU.Registers
     // and combines them for the set and get operations, implements the IRegister Interface so can be used with ANY 2 registers
     // the most likely use case is when using IX and IY registers, as these are considered IXL and IXH, IYL and IYH.
     
-    class Pseudo16BitRegister : IRegister
+    class EightBitRegisterPair : IRegister<ushort>
     {
-        GenericRegister lower;
-        GenericRegister upper;
+        EightBitRegister lower;
+        EightBitRegister upper;
 
-        public Pseudo16BitRegister(GenericRegister lower, GenericRegister upper)
+        public EightBitRegisterPair(EightBitRegister lower, EightBitRegister upper)
         {
             this.lower = lower;
             this.upper = upper;
@@ -38,8 +38,8 @@ namespace z80CpuSim.CPU.Registers
         public void SetData(ushort data)
         {
             byte[] bytes = BitConverter.GetBytes(data);
-            lower.SetData((UInt16)bytes[0]);
-            upper.SetData((UInt16)bytes[1]);
+            lower.SetData((byte)bytes[0]);
+            upper.SetData((byte)bytes[1]);
         }
 
     }

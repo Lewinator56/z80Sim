@@ -5,16 +5,16 @@ using System.Text;
 namespace z80CpuSim.CPU.Registers
 {
     /** Generic register class **/
-    class GenericRegister : IRegister
+    class EightBitRegister : IRegister<byte>
     {
-        private ushort data;
+        private byte data; // make available for subclasses
 
-        public ushort GetData()
+        public byte GetData()
         {
             return data;
         }
 
-        public void SetData(ushort data)
+        public void SetData(byte data)
         {
             this.data = data;
         }

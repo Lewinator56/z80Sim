@@ -71,16 +71,16 @@ namespace z80CpuSim.CPU.Instructions
             return opcodes.GetValueOrDefault(opcode);
         }
 
-        private void OrRWithA(GenericRegister i)
+        private void OrRWithA(EightBitRegister i)
         {
-            Z80.A.SetData((UInt16)(Z80.A.GetData() | i.GetData()));
+            Z80.A.SetData((byte)(Z80.A.GetData() | i.GetData()));
             SetFlagStates();
         }
 
         private void OrAddressWithA()
         {
             byte a = Z80.Z80cu.ReadMemory(Z80.HL.GetData());
-            Z80.A.SetData((UInt16)(a | Z80.A.GetData()));
+            Z80.A.SetData((byte)(a | Z80.A.GetData()));
             SetFlagStates();
 
 
@@ -88,7 +88,7 @@ namespace z80CpuSim.CPU.Instructions
 
         private void OrValueWithA(byte value)
         {
-            Z80.A.SetData((UInt16)(Z80.A.GetData() | value));
+            Z80.A.SetData((byte)(Z80.A.GetData() | value));
             SetFlagStates();
         }
 

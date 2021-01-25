@@ -115,8 +115,8 @@ namespace z80CpuSim.CPU.Instructions
         public void Handle(byte[] data)
         {
             // These are here to allow for registers AND RAM to be written to, bear in mind however, if accessing IX and IY, these are combinations of IXL, IXH, IYL, ILH
-            // and will actually require another specific definition of a GenericRegister further down. For most cases, this will not be required, and the use of an IMemoryType
-            // allows me to instantiate it as a GenericRegister or as RAM (or ProgramCounter) depending on the inputs and outputs, this will save me some time and code
+            // and will actually require another specific definition of a EightBitRegister further down. For most cases, this will not be required, and the use of an IMemoryType
+            // allows me to instantiate it as a EightBitRegister or as RAM (or ProgramCounter) depending on the inputs and outputs, this will save me some time and code
             IMemoryType O; // single register/address output
             IMemoryType I; // single register/address input
 
@@ -142,7 +142,7 @@ namespace z80CpuSim.CPU.Instructions
                     LoadRToR(z80.L, z80.B);
                     break;
                 case 0x46:
-                    LoadDataAtAddressToR(new Pseudo16BitRegister(z80.H, z80.L), z80.B);
+                    LoadDataAtAddressToR(new EightBitRegisterPair(z80.H, z80.L), z80.B);
                     break;
 
             }
@@ -151,14 +151,14 @@ namespace z80CpuSim.CPU.Instructions
 
         }
 
-        private void LoadRToR(GenericRegister i, GenericRegister o)
+        private void LoadRToR(EightBitRegister i, EightBitRegister o)
         {
             // TODO : Ticks
             i.SetData(o.GetData());
             
         }
 
-        private void LoadDataAtAddressToR(Pseudo16BitRegister i, GenericRegister o)
+        private void LoadDataAtAddressToR(EightBitRegisterPair i, EightBitRegister o)
         {
             // TODO : Ticks
             i.SetData(Z80CPU.instance.ram.GetAddress(o.GetData()));

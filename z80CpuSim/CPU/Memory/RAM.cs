@@ -36,12 +36,12 @@ namespace z80CpuSim.CPU.Memory
         }
 
 
-        public byte GetAddress(UInt16 addr)
+        public byte GetAddress(ushort addr)
         {
             return data[addr];
         }
 
-        public void SetAddress(UInt16 addr, byte data)
+        public void SetAddress(ushort addr, byte data)
         {
             this.data[addr] = data;
         }
