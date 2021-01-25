@@ -9,6 +9,12 @@ namespace z80CpuSim.CPU
 {
     class Z80ControlUnit : IControlUnit
     {
+
+        // SOURCES
+        //
+        // bitwise operators: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators
+
+        //
         Z80CPU Z80;
         // list of the possible instructions
         IInstruction[] instructions = 
@@ -182,7 +188,9 @@ namespace z80CpuSim.CPU
                 // Set a bit to 1, this ORs the current state of the register with the correct
                 // integer value calculated by 2 ^ bit flag value
                 // these values will be numbers represented by 1 at the index of the bit flag
-                Z80.F.SetData((UInt16)(Z80.F.GetData() | 2 ^ (UInt16)bit));
+                // Using my custom power method here because i CANNOT use the .net one, since it expects
+                // doubles, and i CANNOT under eny circumstances use doubles
+                Z80.F.SetData((UInt16)(Z80.F.GetData() | (UInt16)IntegerMath.Pow(2, (UInt16)bit)));
             } else
             {
                 // Reset the flag bit, uses a bit shift by the number of the bit index in the 
@@ -192,5 +200,7 @@ namespace z80CpuSim.CPU
                 Z80.F.SetData(n);
             }
         }
+
+        
     }
 }

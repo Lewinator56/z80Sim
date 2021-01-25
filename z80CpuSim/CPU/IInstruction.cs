@@ -11,5 +11,6 @@ namespace z80CpuSim.CPU
         public void Handle(byte[] data);
 
         public int GetBytesToRead(byte opcode);
+
     }
 }
