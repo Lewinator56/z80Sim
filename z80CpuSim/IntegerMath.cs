@@ -20,5 +20,6 @@ namespace z80CpuSim
             return accumulator;
 
         }
+
     }
 }

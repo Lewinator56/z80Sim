@@ -69,8 +69,8 @@ namespace z80CpuSim.CPU.Instructions
             // Set or reset Z, 0x00 is 0, this checks if A is equal to 0 (guess i could have just done A == 0) 
             Z80.Z80cu.SetFlagBit(FlagBit.Zero, (Z80.A.GetData() & 0x00) == 0x00);
 
-            // set H
-            Z80.Z80cu.SetFlagBit(FlagBit.HalfCarry, true);
+            // reset H
+            Z80.Z80cu.SetFlagBit(FlagBit.HalfCarry, false);
 
             // Reset P/V
             Z80.Z80cu.SetFlagBit(FlagBit.Parity, false);
