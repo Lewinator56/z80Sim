@@ -13,8 +13,8 @@ namespace z80CpuSim.CPU.Registers
     
     class EightBitRegisterPair : IRegister<ushort>
     {
-        EightBitRegister lower;
-        EightBitRegister upper;
+        public EightBitRegister lower;
+        public EightBitRegister upper;
 
         public EightBitRegisterPair(EightBitRegister lower, EightBitRegister upper)
         {
