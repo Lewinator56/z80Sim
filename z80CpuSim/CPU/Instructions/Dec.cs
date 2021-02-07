@@ -118,6 +118,9 @@ namespace z80CpuSim.CPU.Instructions
             SetFlagStates(a);
         }
 
+        //
+        // Rethink check for half carry,. at the moment, it doesnt work
+        //
         private void SetFlagStates(byte checkByte)
         {
             // check negative

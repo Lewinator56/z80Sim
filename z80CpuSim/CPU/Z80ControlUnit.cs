@@ -114,7 +114,7 @@ namespace z80CpuSim.CPU
                 Z80.Tick();
                 Z80.dataBus.SetData(Z80.ram.GetAddress(Z80.addressBus.GetData()));
 
-                Z80.Tick();
+                //Z80.Tick();
                 byte data = Convert.ToByte(Z80.dataBus.GetData());
                 instructionData.Add(data);
 

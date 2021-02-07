@@ -45,7 +45,7 @@ namespace z80CpuSim.CPU.Instructions
                 sbyte a = (sbyte)Z80.A.GetData();
                 short r = (short)(a - b);
                 Z80.A.SetData((byte)r);
-                SetFlagStates(r);
+                SetFlagStates(r, b);
             }
             
         }
@@ -56,9 +56,9 @@ namespace z80CpuSim.CPU.Instructions
             unchecked
             {
                 sbyte a = (sbyte)Z80.Z80cu.ReadMemory(Z80.HL.GetData());
-                short r = (short)(a - (sbyte)Z80.A.GetData());
+                short r = (short)( (sbyte)Z80.A.GetData() - a);
                 Z80.A.SetData((byte)r);
-                SetFlagStates(r);
+                SetFlagStates(r, a);
             }
             
             
@@ -74,11 +74,11 @@ namespace z80CpuSim.CPU.Instructions
                 sbyte a = (sbyte)Z80.A.GetData();
                 short r = (short)(a - b);
                 Z80.A.SetData((byte)r);
-                SetFlagStates(r);
+                SetFlagStates(r, b);
             }
         }
 
-        private void SetFlagStates(short r)
+        private void SetFlagStates(short r, sbyte s)
         {
             // Set or reset S, 0x80 is 128, this is the 7th value in the A register, if it is 1 the value is negative and the bit is set
             Z80.Z80cu.SetFlagBit(FlagBit.Sign, (Z80.A.GetData() & 0x80) == 0x80);
@@ -87,7 +87,7 @@ namespace z80CpuSim.CPU.Instructions
             Z80.Z80cu.SetFlagBit(FlagBit.Zero, (Z80.A.GetData() & 0x00) == 0x00);
 
             // set H if bit 3 is carried to 4 (check if the value is greater than 0x0f)
-            Z80.Z80cu.SetFlagBit(FlagBit.HalfCarry, (Z80.A.GetData() > 0x0F));
+            Z80.Z80cu.SetFlagBit(FlagBit.HalfCarry, (r < 0x0F) || (r + s > 0x0F && r < 0x0F));
 
             // set P/V if the result overflows, basically, if its smaller than -128, which is 0x80
             Z80.Z80cu.SetFlagBit(FlagBit.Parity, (r > 127 || r < -128));
