@@ -64,7 +64,9 @@ namespace z80CpuSim.CPU
         public EightBitRegisterPair DE = new EightBitRegisterPair(Z80CPU.instance.D, Z80CPU.instance.E);
         public EightBitRegisterPair HL = new EightBitRegisterPair(Z80CPU.instance.H, Z80CPU.instance.L);
 
-        
+        // interrupt flip flops
+        public bool IFF1 = false;
+        public bool IFF2 = false;
         
 
 
@@ -86,6 +88,8 @@ namespace z80CpuSim.CPU
 
         // pins
         bool wait = false;
+
+        
         
 
         // Constructor, sets up the RAM, and sets the initial frequency (though, this can be changed from the UI, this is just for instantiation)
