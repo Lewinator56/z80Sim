@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace z80CpuSim
+namespace Z80Tests
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,8 +23,6 @@ namespace z80CpuSim
         public MainWindow()
         {
             InitializeComponent();
-            Tests.TestAdder ta = new Tests.TestAdder();
-            ta.Test();
         }
     }
 }

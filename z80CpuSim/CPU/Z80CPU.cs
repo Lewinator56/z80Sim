@@ -22,13 +22,20 @@ namespace z80CpuSim.CPU
         Zero, 
         Sign
     }
-    sealed class Z80CPU : ICPU
+    class Z80CPU : ICPU
     {
         //
-        // Implement the singleton approach, this ensures there will only ever be ONE instance of the CPU class
-        //
-        private static readonly Lazy<Z80CPU> lazySingleton = new Lazy<Z80CPU>(() => new Z80CPU(65535, 1));
-        public static Z80CPU instance { get { return lazySingleton.Value; } }
+        // use singleton approach, make sure there is only ever 1 instance of the cpu class
+        private static Z80CPU _Instance;
+        public static Z80CPU instance()
+        {
+            if (_Instance == null)
+            {
+                System.Diagnostics.Debug.WriteLine("instance");
+                _Instance = new Z80CPU(65535, 1);
+            }
+            return _Instance;
+        }
         //
         //
 
@@ -59,10 +66,10 @@ namespace z80CpuSim.CPU
         public EightBitRegister IYL = new EightBitRegister();
 
         // 16 bit registers as 8 bit pairs
-        public EightBitRegisterPair AF = new EightBitRegisterPair(Z80CPU.instance.A, Z80CPU.instance.F);
-        public EightBitRegisterPair BC = new EightBitRegisterPair(Z80CPU.instance.B, Z80CPU.instance.C);
-        public EightBitRegisterPair DE = new EightBitRegisterPair(Z80CPU.instance.D, Z80CPU.instance.E);
-        public EightBitRegisterPair HL = new EightBitRegisterPair(Z80CPU.instance.H, Z80CPU.instance.L);
+        public EightBitRegisterPair AF; 
+        public EightBitRegisterPair BC; 
+        public EightBitRegisterPair DE; 
+        public EightBitRegisterPair HL; 
 
         // interrupt flip flops
         public bool IFF1 = false;
@@ -93,11 +100,24 @@ namespace z80CpuSim.CPU
         
 
         // Constructor, sets up the RAM, and sets the initial frequency (though, this can be changed from the UI, this is just for instantiation)
-        public Z80CPU(int ramSize, int frequency)
+        protected Z80CPU(int ramSize, int frequency)
         {
             ram = new RAM(ramSize, new byte[0]);
-            Z80cu = new Z80ControlUnit();
+            
             SetSpeed(frequency);
+
+            // initialise stuff i cant do outside here
+            AF = new EightBitRegisterPair(A, F);
+            BC = new EightBitRegisterPair(B, C);
+            DE = new EightBitRegisterPair(D, E);
+            HL = new EightBitRegisterPair(H, L);
+        }
+
+        // bodge to fix the issue with circular dependancies
+        // this must be called AFTER and externally from the constructor
+        public void Setup()
+        {
+            Z80cu = new Z80ControlUnit();
         }
         // Not entirely sure if this is the best way of doing this, it will work, im just not sure how well.
         // The problem is, that the thread will block, not given the CPU is running on a separate thread thats fine, it wont block the UI

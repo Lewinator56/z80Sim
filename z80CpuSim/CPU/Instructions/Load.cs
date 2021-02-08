@@ -120,7 +120,7 @@ namespace z80CpuSim.CPU.Instructions
             IMemoryType O; // single register/address output
             IMemoryType I; // single register/address input
 
-            Z80CPU z80 = Z80CPU.instance; // im too lazy to go through and replace all the z80's with Z80CPU.instance
+            Z80CPU z80 = Z80CPU.instance(); // im too lazy to go through and replace all the z80's with Z80CPU.instance
 
             switch (data[0]) {
                 case 0x40:
@@ -161,7 +161,7 @@ namespace z80CpuSim.CPU.Instructions
         private void LoadDataAtAddressToR(EightBitRegisterPair i, EightBitRegister o)
         {
             // TODO : Ticks
-            i.SetData(Z80CPU.instance.ram.GetAddress(o.GetData()));
+            i.SetData(Z80CPU.instance().ram.GetAddress(o.GetData()));
         }
 
         

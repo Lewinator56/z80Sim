@@ -27,7 +27,7 @@ namespace z80CpuSim.CPU.Instructions
 
             { 0xC6, 2 }
         };
-        Z80CPU Z80 = Z80CPU.instance;
+        Z80CPU Z80 = Z80CPU.instance();
         public bool CanHandle(byte opcode)
         {
             return opcodes.ContainsKey(opcode);

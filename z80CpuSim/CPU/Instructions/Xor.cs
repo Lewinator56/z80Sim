@@ -10,7 +10,7 @@ namespace z80CpuSim.CPU.Instructions
     class Xor : IInstruction
     {
 
-        Z80CPU Z80 = Z80CPU.instance; // its just easier to type z80 rather than Z80CPU.instance
+        Z80CPU Z80 = Z80CPU.instance(); // its just easier to type z80 rather than Z80CPU.instance
 
         Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {

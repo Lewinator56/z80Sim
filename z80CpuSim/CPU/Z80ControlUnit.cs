@@ -17,6 +17,7 @@ namespace z80CpuSim.CPU
         //
         Z80CPU Z80;
         // list of the possible instructions
+        
         IInstruction[] instructions = 
         {
             new Adc(),
@@ -44,12 +45,13 @@ namespace z80CpuSim.CPU
             new Xor()
         };
         
+        
 
 
         // Start program execution
         public Z80ControlUnit()
         {
-            this.Z80 = Z80CPU.instance;
+            this.Z80 = Z80CPU.instance();
         }
         public void StartExecution()
         {
@@ -134,6 +136,7 @@ namespace z80CpuSim.CPU
         // This simply checks if the instruction can be handled by looping through all of the possible instructions, as defined in the array above
         public IInstruction Decode(byte opcode)
         {
+            
             foreach (IInstruction instruction in instructions)
             {
                 if (instruction.CanHandle(opcode))
@@ -141,6 +144,7 @@ namespace z80CpuSim.CPU
                     return instruction;
                 }
             }
+            
             return null;
         }
 

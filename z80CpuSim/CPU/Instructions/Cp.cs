@@ -9,7 +9,7 @@ namespace z80CpuSim.CPU.Instructions
 {
     class Cp : IInstruction
     {
-        Z80CPU Z80 = Z80CPU.instance;
+        Z80CPU Z80 = Z80CPU.instance();
         Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {
             // ok, so as far as i underastand, this is a comparrison, 

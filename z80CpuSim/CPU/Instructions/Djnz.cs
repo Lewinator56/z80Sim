@@ -6,7 +6,7 @@ namespace z80CpuSim.CPU.Instructions
 {
     class Djnz : IInstruction
     {
-        Z80CPU Z80 = Z80CPU.instance;
+        Z80CPU Z80 = Z80CPU.instance();
         Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {
             { 0x10, 2 }

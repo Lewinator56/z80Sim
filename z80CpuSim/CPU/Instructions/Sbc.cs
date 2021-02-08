@@ -8,7 +8,7 @@ namespace z80CpuSim.CPU.Instructions
 {
     class Sbc : IInstruction
     {
-        Z80CPU Z80 = Z80CPU.instance;
+        Z80CPU Z80 = Z80CPU.instance();
         Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {
             { 0x98, 1 },
