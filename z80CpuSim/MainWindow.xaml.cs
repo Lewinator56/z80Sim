@@ -23,8 +23,10 @@ namespace z80CpuSim
         public MainWindow()
         {
             InitializeComponent();
-            Tests.TestAdder ta = new Tests.TestAdder();
-            ta.Test();
+            //Tests.TestAdder ta = new Tests.TestAdder();
+            //ta.Test();
+            Tests.TestSub ts = new Tests.TestSub();
+            ts.Test();
         }
     }
 }

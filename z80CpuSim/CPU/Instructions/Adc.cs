@@ -119,7 +119,7 @@ namespace z80CpuSim.CPU.Instructions
             Z80.Z80cu.SetFlagBit(FlagBit.Sign, (Z80.A.GetData() & 0x80) == 0x80);
 
             // Set or reset Z, 0x00 is 0, this checks if A is equal to 0 (guess i could have just done A == 0) 
-            Z80.Z80cu.SetFlagBit(FlagBit.Zero, (Z80.A.GetData() & 0x00) == 0x00);
+            Z80.Z80cu.SetFlagBit(FlagBit.Zero, (Z80.A.GetData() | 0x00) == 0x00);
 
             // set H if bit 3 is carried to 4 (check if the value is greater than 0x0f)
             Z80.Z80cu.SetFlagBit(FlagBit.HalfCarry, (Z80.A.GetData() > 0x0F));

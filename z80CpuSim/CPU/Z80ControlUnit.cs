@@ -195,7 +195,10 @@ namespace z80CpuSim.CPU
                 // these values will be numbers represented by 1 at the index of the bit flag
                 // Using my custom power method here because i CANNOT use the .net one, since it expects
                 // doubles, and i CANNOT under eny circumstances use doubles
-                Z80.F.SetData((byte)(Z80.F.GetData() | (byte)IntegerMath.Pow(2, (byte)bit)));
+                //Z80.F.SetData((byte)(Z80.F.GetData() | (byte)IntegerMath.Pow(2, (byte)bit)));
+                byte n = Z80.F.GetData();
+                n = (byte)(n | (1 << (byte)bit));
+                Z80.F.SetData(n);
             } else
             {
                 // Reset the flag bit, uses a bit shift by the number of the bit index in the 

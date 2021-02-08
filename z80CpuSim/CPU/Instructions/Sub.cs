@@ -31,7 +31,36 @@ namespace z80CpuSim.CPU.Instructions
 
         public void Handle(byte[] data)
         {
-
+            switch (data[0])
+            {
+                case 0x90:
+                    SubRFromA(Z80.B);
+                    break;
+                case 0x91:
+                    SubRFromA(Z80.C);
+                    break;
+                case 0x92:
+                    SubRFromA(Z80.D);
+                    break;
+                case 0x93:
+                    SubRFromA(Z80.E);
+                    break;
+                case 0x94:
+                    SubRFromA(Z80.H);
+                    break;
+                case 0x95:
+                    SubRFromA(Z80.L);
+                    break;
+                case 0x96:
+                    SubAddressFromA();
+                    break;
+                case 0x97:
+                    SubRFromA(Z80.A);
+                    break;
+                case 0xD6:
+                    SubValueFromA(data[1]);
+                    break;
+            }
         }
         public int GetBytesToRead(byte opcode)
         {
@@ -85,7 +114,7 @@ namespace z80CpuSim.CPU.Instructions
             Z80.Z80cu.SetFlagBit(FlagBit.Sign, (Z80.A.GetData() & 0x80) == 0x80);
 
             // Set or reset Z, 0x00 is 0, this checks if A is equal to 0 (guess i could have just done A == 0) 
-            Z80.Z80cu.SetFlagBit(FlagBit.Zero, (Z80.A.GetData() & 0x00) == 0x00);
+            Z80.Z80cu.SetFlagBit(FlagBit.Zero, (Z80.A.GetData() | 0x00) == 0x00);
 
             // set H if bit 3 is carried to 4 (check if the value is greater than 0x0f)
             //Z80.Z80cu.SetFlagBit(FlagBit.HalfCarry, (r < 0x0F) || (r + s > 0x0F && r < 0x0F)); dont need this anymore either
