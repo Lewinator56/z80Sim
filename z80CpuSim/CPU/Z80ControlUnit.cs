@@ -201,6 +201,11 @@ namespace z80CpuSim.CPU
             }
         }
 
+        public bool GetFlagBit(FlagBit bit)
+        {
+            return (Z80.F.GetData() & (1 << (byte)bit)) != 0;
+        }
+
         
     }
 }
