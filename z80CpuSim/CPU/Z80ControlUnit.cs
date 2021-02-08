@@ -105,13 +105,14 @@ namespace z80CpuSim.CPU
 
 
                 // TODO : Determine if my ticks are correct, it would seem that they are however
-                Z80.Tick();
+                // fixed tick timings
+                //Z80.Tick();
                 Z80.PC.Increment();
 
-                Z80.Tick();
+                //Z80.Tick();
                 Z80.addressBus.SetData(Z80.PC.GetData());
 
-                Z80.Tick();
+                //Z80.Tick();
                 Z80.dataBus.SetData(Z80.ram.GetAddress(Z80.addressBus.GetData()));
 
                 //Z80.Tick();
