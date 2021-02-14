@@ -10,7 +10,6 @@ namespace z80CpuSim.CPU.Instructions
     class Sub : IInstruction
     {
         Z80CPU Z80 = Z80CPU.instance();
-        BinaryAdder Ba = new BinaryAdder();
         Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {
             { 0x90, 1 },
@@ -73,7 +72,7 @@ namespace z80CpuSim.CPU.Instructions
             {
                 byte b = i.GetData();
                 byte a = Z80.A.GetData();
-                byte r = Ba.Add8Bit(a, (byte)-b, false);
+                byte r = Z80.BinAdd.Add8Bit(a, (byte)-b, false);
                 Z80.A.SetData(r);
                 SetFlagStates((sbyte)r);
             }
@@ -86,7 +85,7 @@ namespace z80CpuSim.CPU.Instructions
             unchecked
             {
                 byte a = Z80.Z80cu.ReadMemory(Z80.HL.GetData());
-                byte r = Ba.Add8Bit(Z80.A.GetData(), (byte)-a, false);
+                byte r = Z80.BinAdd.Add8Bit(Z80.A.GetData(), (byte)-a, false);
                 Z80.A.SetData(r);
                 SetFlagStates((sbyte)r);
             }
@@ -102,7 +101,7 @@ namespace z80CpuSim.CPU.Instructions
             {
                 byte b = value;
                 byte a = Z80.A.GetData();
-                byte r = Ba.Add8Bit(a, (byte)-b, false);
+                byte r = Z80.BinAdd.Add8Bit(a, (byte)-b, false);
                 Z80.A.SetData(r);
                 SetFlagStates((sbyte)r);
             }

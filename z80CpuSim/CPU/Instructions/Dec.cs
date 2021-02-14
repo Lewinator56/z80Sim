@@ -86,6 +86,7 @@ namespace z80CpuSim.CPU.Instructions
         private void DecrementR8Bit(EightBitRegister r)
         {
             // 4 ticks, no extra tick needed
+            
             r.SetData((byte)(r.GetData() - (byte)1));
 
             //set flags

@@ -66,7 +66,7 @@ namespace z80CpuSim.CPU.Instructions
         {
             return opcodes.GetValueOrDefault(opcode);
         }
-        
+
         //
         // Operations
         //
@@ -76,12 +76,12 @@ namespace z80CpuSim.CPU.Instructions
 
             unchecked
             {
-                sbyte b = (sbyte)i.GetData();
-                sbyte a = (sbyte)Z80.A.GetData();
-                sbyte c = (sbyte)(Z80.F.GetData() & 1);
-                short r = (short)(a + b + c);
-                Z80.A.SetData((byte)r);
-                SetFlagStates(r);
+                byte b = i.GetData();
+                byte a = Z80.A.GetData();
+                byte c = (byte)(Z80.F.GetData() & 1);
+                byte r = Z80.BinAdd.Add8Bit(a, b, c == 1);
+                Z80.A.SetData(r);
+                SetFlagStates((sbyte)r);
             }
 
 
@@ -89,14 +89,19 @@ namespace z80CpuSim.CPU.Instructions
 
         private void AddHLToA()
         {
+            //Z80.addressBus.SetData(Z80.HL.GetData());
+
+            //Z80.dataBus.SetData(Z80.ram.GetAddress(Z80.addressBus.GetData()));
+
+            // Changed to utilize the new ReadMemory method
 
             unchecked
             {
-                sbyte a = (sbyte)Z80.Z80cu.ReadMemory(Z80.HL.GetData());
-                sbyte c = (sbyte)(Z80.F.GetData() & 1);
-                short r = (short)(a + (sbyte)Z80.A.GetData() + c);
-                Z80.A.SetData((byte)r);
-                SetFlagStates(r);
+                byte a = Z80.Z80cu.ReadMemory(Z80.HL.GetData());
+                byte c = (byte)(Z80.F.GetData() & 1);
+                byte r = Z80.BinAdd.Add8Bit(Z80.A.GetData(), (byte)a, c == 1);
+                Z80.A.SetData(r);
+                SetFlagStates((sbyte)r);
             }
         }
 
@@ -104,12 +109,12 @@ namespace z80CpuSim.CPU.Instructions
         {
             unchecked
             {
-                sbyte b = (sbyte)value;
-                sbyte a = (sbyte)Z80.A.GetData();
-                sbyte c = (sbyte)(Z80.F.GetData() & 1);
-                short r = (short)(a + b + c);
-                Z80.A.SetData((byte)r);
-                SetFlagStates(r);
+                byte b = value;
+                byte a = Z80.A.GetData();
+                byte c = (byte)(Z80.F.GetData() & 1);
+                byte r = Z80.BinAdd.Add8Bit(a, (byte)b, c == 1);
+                Z80.A.SetData(r);
+                SetFlagStates((sbyte)r);
             }
         }
 
@@ -122,7 +127,7 @@ namespace z80CpuSim.CPU.Instructions
             Z80.Z80cu.SetFlagBit(FlagBit.Zero, (Z80.A.GetData() | 0x00) == 0x00);
 
             // set H if bit 3 is carried to 4 (check if the value is greater than 0x0f)
-            Z80.Z80cu.SetFlagBit(FlagBit.HalfCarry, (Z80.A.GetData() > 0x0F));
+            //Z80.Z80cu.SetFlagBit(FlagBit.HalfCarry, (Z80.A.GetData() > 0x0F));
 
             // set P/V if the result overflows, basically, if its smaller than -128, which is 0x80
             Z80.Z80cu.SetFlagBit(FlagBit.Parity, (r > 127 || r < -128));
@@ -130,7 +135,7 @@ namespace z80CpuSim.CPU.Instructions
             // set N
             Z80.Z80cu.SetFlagBit(FlagBit.Subtract, false);
             //set C if the value is < -128 (0x80)
-            Z80.Z80cu.SetFlagBit(FlagBit.Carry, (ushort)r > 0xff);
+            //Z80.Z80cu.SetFlagBit(FlagBit.Carry, (ushort)r > 0xff);
         }
     }
 }

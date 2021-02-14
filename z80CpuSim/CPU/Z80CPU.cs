@@ -65,6 +65,17 @@ namespace z80CpuSim.CPU
         public EightBitRegister IYH = new EightBitRegister();
         public EightBitRegister IYL = new EightBitRegister();
 
+        // alternate inaccessible registers
+        public EightBitRegister _A = new EightBitRegister();
+        public EightBitRegister _B = new EightBitRegister();
+        public EightBitRegister _C = new EightBitRegister();
+        public EightBitRegister _D = new EightBitRegister();
+        public EightBitRegister _E = new EightBitRegister();
+        public EightBitRegister _F = new EightBitRegister();
+        public EightBitRegister _H = new EightBitRegister();
+        public EightBitRegister _L = new EightBitRegister();
+
+
         // 16 bit registers as 8 bit pairs
         public EightBitRegisterPair AF; 
         public EightBitRegisterPair BC; 
@@ -96,6 +107,9 @@ namespace z80CpuSim.CPU
         // pins
         bool wait = false;
 
+        //adder
+        public BinaryAdder BinAdd;
+
         
         
 
@@ -118,6 +132,7 @@ namespace z80CpuSim.CPU
         public void Setup()
         {
             Z80cu = new Z80ControlUnit();
+            BinAdd = new BinaryAdder();
         }
         // Not entirely sure if this is the best way of doing this, it will work, im just not sure how well.
         // The problem is, that the thread will block, not given the CPU is running on a separate thread thats fine, it wont block the UI
@@ -140,6 +155,7 @@ namespace z80CpuSim.CPU
             }
 
         }
+        
 
         // Sets the speed of the CPU in hertz, I'm not entirely certain the absolute fastest this can run, id assume its 1000hz (or 1MHz)
         public void SetSpeed(int hertz)
@@ -157,6 +173,8 @@ namespace z80CpuSim.CPU
         {
             tickInterrupt = false;
         }
+
+       
 
     }
 }
