@@ -8,7 +8,8 @@ namespace z80CpuSim.CPU.Instructions
 {
     class Load : IInstruction
     {
-         
+
+        Z80CPU Z80 = Z80CPU.instance();
         // ive tried to make this look neat and easier to read.... that didnt really work did it
         Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {
@@ -120,29 +121,78 @@ namespace z80CpuSim.CPU.Instructions
             IMemoryType O; // single register/address output
             IMemoryType I; // single register/address input
 
-            Z80CPU z80 = Z80CPU.instance(); // im too lazy to go through and replace all the z80's with Z80CPU.instance
+             // im too lazy to go through and replace all the z80's with Z80CPU.instance
 
             switch (data[0]) {
+                case 0x01:
+                    LoadValueToR(data[1..2], Z80.BC);
+                    break;
+                case 0x02:
+                    LoadRToAddress(Z80.A, Z80.BC.GetData());
+                    break;
+                case 0x06:
+                    LoadValueToR(data[1], Z80.B);
+                    break;
+                case 0x0A:
+                    LoadDataAtAddressToR(Z80.BC, Z80.A);
+                    break;
+                case 0x0E:
+                    LoadValueToR(data[1], Z80.C);
+                    break;
+
+                case 0x11:
+                    LoadValueToR(data[1..2], Z80.DE);
+                    break;
+                case 0x12:
+                    LoadRToAddress(Z80.A, Z80.DE.GetData());
+                    break;
+                case 0x16:
+                    LoadValueToR(data[1], Z80.D);
+                    break;
+                case 0x1A:
+                    LoadDataAtAddressToR(Z80.DE, Z80.A);
+                    break;
+                case 0x1E:
+                    LoadValueToR(data[1], Z80.E);
+                    break;
+
+                case 0x21:
+                    LoadValueToR(data[1..2], Z80.HL);
+                    break;
+                case 0x22:
+                    LoadRToAddress(Z80.HL, Z80.DE.GetData());
+                    break;
+                case 0x26:
+                    LoadValueToR(data[1], Z80.H);
+                    break;
+                case 0x2A:
+                    LoadDataAtAddressToR(data[1..2], Z80.HL);
+                    break;
+                case 0x2E:
+                    LoadValueToR(data[1], Z80.L);
+                    break;
+
+
                 case 0x40:
-                    LoadRToR(z80.B, z80.B);
+                    LoadRToR(Z80.B, Z80.B);
                     break;
                 case 0x41:
-                    LoadRToR(z80.C, z80.B);
+                    LoadRToR(Z80.C, Z80.B);
                     break;
                 case 0x42:
-                    LoadRToR(z80.D, z80.B);
+                    LoadRToR(Z80.D, Z80.B);
                     break;
                 case 0x43:
-                    LoadRToR(z80.E, z80.B);
+                    LoadRToR(Z80.E, Z80.B);
                     break;
                 case 0x44:
-                    LoadRToR(z80.H, z80.B);
+                    LoadRToR(Z80.H, Z80.B);
                     break;
                 case 0x45:
-                    LoadRToR(z80.L, z80.B);
+                    LoadRToR(Z80.L, Z80.B);
                     break;
                 case 0x46:
-                    LoadDataAtAddressToR(new EightBitRegisterPair(z80.H, z80.L), z80.B);
+                    LoadDataAtAddressToR(Z80.HL, Z80.B);
                     break;
 
             }
@@ -161,7 +211,40 @@ namespace z80CpuSim.CPU.Instructions
         private void LoadDataAtAddressToR(EightBitRegisterPair i, EightBitRegister o)
         {
             // TODO : Ticks
-            i.SetData(Z80CPU.instance().ram.GetAddress(o.GetData()));
+            o.SetData(Z80.Z80cu.ReadMemory(i.GetData()));
+        }
+        private void LoadDataAtAddressToR(byte[] adr, EightBitRegister o )
+        {
+            o.SetData(Z80.Z80cu.ReadMemory(BitConverter.ToUInt16(adr)));
+        }
+        private void LoadDataAtAddressToR(byte[] adr, EightBitRegisterPair o)
+        {
+            o.SetData(Z80.Z80cu.ReadMemory(BitConverter.ToUInt16(adr)));
+        }
+
+        // method overriding
+        private void LoadValueToR(byte value, EightBitRegister r)
+        {
+            r.SetData(value);
+        }
+        private void LoadValueToR(byte[] value, EightBitRegisterPair r)
+        {
+            r.SetData(BitConverter.ToUInt16(value));
+        }
+
+        private void LoadValueToAddress(byte value, ushort adr)
+        {
+            Z80.Z80cu.WriteMemory(adr, value);
+        }
+
+        // more method overriding
+        private void LoadRToAddress(EightBitRegister r, ushort adr)
+        {
+            Z80.Z80cu.WriteMemory(adr, r.GetData());
+        }
+        private void LoadRToAddress(EightBitRegisterPair, ushort adr)
+        {
+
         }
 
         

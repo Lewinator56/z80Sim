@@ -25,8 +25,10 @@ namespace z80CpuSim
             InitializeComponent();
             //Tests.TestAdder ta = new Tests.TestAdder();
             //ta.Test();
-            Tests.TestSub ts = new Tests.TestSub();
-            ts.Test();
+            //Tests.TestSub ts = new Tests.TestSub();
+            //ts.Test();
+            Tests.TestReset tr = new Tests.TestReset();
+            tr.Test();
         }
     }
 }

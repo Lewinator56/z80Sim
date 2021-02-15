@@ -69,10 +69,10 @@ namespace z80CpuSim.CPU.Instructions
         {
             Z80.Tick();
             Z80.SP.SetData((ushort)(Z80.SP.GetData() - 1));
-            byte[] pc = BitConverter.GetBytes((ushort)(Z80.PC.GetData() + 1));
-            Z80.Z80cu.WriteMemory(Z80.SP.GetData(), pc[0]);
-            Z80.SP.SetData((ushort)(Z80.SP.GetData() - 1));
+            byte[] pc = BitConverter.GetBytes((ushort)(Z80.PC.GetData()));
             Z80.Z80cu.WriteMemory(Z80.SP.GetData(), pc[1]);
+            Z80.SP.SetData((ushort)(Z80.SP.GetData() - 1));
+            Z80.Z80cu.WriteMemory(Z80.SP.GetData(), pc[0]);
 
             Z80.PC.SetData(value);
 

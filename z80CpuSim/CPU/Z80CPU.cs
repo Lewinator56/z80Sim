@@ -32,7 +32,7 @@ namespace z80CpuSim.CPU
             if (_Instance == null)
             {
                 System.Diagnostics.Debug.WriteLine("instance");
-                _Instance = new Z80CPU(65535, 1);
+                _Instance = new Z80CPU(65536, 1);
             }
             return _Instance;
         }

@@ -6,7 +6,7 @@ using z80CpuSim.CPU;
 
 namespace z80CpuSim.Tests
 {
-    class TestAdder
+    class TestAdder : ITest
     {
         public void Test()
         {
