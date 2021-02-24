@@ -4,9 +4,49 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:z80CpuSim"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:ui="clr-namespace:z80CpuSim.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None" ResizeMode="CanResizeWithGrip" MouseDown="Window_MouseDown" AllowsTransparency="True" Background="Transparent">
+    <materialDesign:Card Background="White" materialDesign:ShadowAssist.ShadowDepth="Depth2"  UniformCornerRadius="10" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!-- control bar-->
+            <Grid Name="WindowHeader" Grid.Row="0" Height="auto" Background="#455A64" materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Name="WindowName" Grid.Column="1" Content="Z80CPUSim" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right" >
+                    <Button Name="MinimiseWindowBtn" Style="{DynamicResource MaterialDesignToolButton}" Width="25" Height="25" Margin="10, 5, 10, 5" Background="White" BorderThickness="0" BorderBrush="Transparent" Foreground="white" Click="MinimiseWindowBtn_Click">
+                        <materialDesign:PackIcon Kind="WindowMinimize" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon.LayoutTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                            </materialDesign:PackIcon.LayoutTransform>
+                        </materialDesign:PackIcon>
+                    </Button>
+                    <Button Name="RestoreWindowBtn" Style="{DynamicResource MaterialDesignToolButton}" Width="25" Height="25" Margin="10, 5, 10, 5" Background="White" BorderThickness="0" BorderBrush="Transparent" Foreground="white" Click="RestoreWindowBtn_Click">
+                        <materialDesign:PackIcon Kind="WindowRestore" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon.LayoutTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                            </materialDesign:PackIcon.LayoutTransform>
+                        </materialDesign:PackIcon>
+                    </Button>
+                    <Button Name="CloseWindowBtn" Style="{DynamicResource MaterialDesignToolButton}" Width="25" Height="25" Margin="10, 5, 10, 5" Background="IndianRed" BorderThickness="0" BorderBrush="Transparent" Foreground="IndianRed" Click="CloseWindowBtn_Click">
+                        <materialDesign:PackIcon Kind="WindowClose" HorizontalAlignment="Center">
+                            <materialDesign:PackIcon.LayoutTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                            </materialDesign:PackIcon.LayoutTransform>
+                        </materialDesign:PackIcon>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <ui:MainContainer Grid.Row="1"/>
+        </Grid>
+    </materialDesign:Card>
 </Window>

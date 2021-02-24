@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using z80CpuSim.CPU;
 
 namespace z80CpuSim
 {
@@ -29,6 +30,38 @@ namespace z80CpuSim
             //ts.Test();
             Tests.TestReset tr = new Tests.TestReset();
             tr.Test();
+            
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
+
+        private void MinimiseWindowBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void RestoreWindowBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                WindowHeader.Margin = new Thickness(0, 0, 0, 0);
+                this.WindowState = WindowState.Normal;
+            } else
+            {
+                WindowHeader.Margin = new Thickness(5, 5, 5, 0);
+                this.WindowState = WindowState.Maximized;
+            }
+        }
+
+        private void CloseWindowBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

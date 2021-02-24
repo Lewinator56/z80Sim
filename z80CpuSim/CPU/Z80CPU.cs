@@ -174,6 +174,29 @@ namespace z80CpuSim.CPU
             tickInterrupt = false;
         }
 
+        public List<RegisterAbstraction> GetRegisterList()
+        {
+            List<RegisterAbstraction> regList = new List<RegisterAbstraction>();
+
+            regList.Add(new RegisterAbstraction(A, "A"));
+            regList.Add(new RegisterAbstraction(B, "B"));
+            regList.Add(new RegisterAbstraction(C, "C"));
+            regList.Add(new RegisterAbstraction(D, "D"));
+            regList.Add(new RegisterAbstraction(E, "E"));
+            regList.Add(new RegisterAbstraction(F, "F"));
+            regList.Add(new RegisterAbstraction(H, "H"));
+            regList.Add(new RegisterAbstraction(L, "L"));
+            regList.Add(new RegisterAbstraction(I, "I"));
+            regList.Add(new RegisterAbstraction(R, "R"));
+            regList.Add(new RegisterAbstraction(IXH, "IXH"));
+            regList.Add(new RegisterAbstraction(IXL, "IXL"));
+            regList.Add(new RegisterAbstraction(IYH, "IYH"));
+            regList.Add(new RegisterAbstraction(IYL, "IYL"));
+            regList.Add(new RegisterAbstraction(PC, "PC"));
+            regList.Add(new RegisterAbstraction(SP, "SP"));
+            return regList;
+        }
+
        
 
     }

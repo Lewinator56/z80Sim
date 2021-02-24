@@ -15,5 +15,6 @@ namespace z80CpuSim.CPU
 
         // Sets the data in the register to the specified byte
         public void SetData(T data);
+
     }
 }

@@ -160,7 +160,7 @@ namespace z80CpuSim.CPU.Instructions
                     LoadValueToR(data[1..2], Z80.HL);
                     break;
                 case 0x22:
-                    LoadRToAddress(Z80.HL, Z80.DE.GetData());
+                    LoadRToAddress(Z80.HL, BitConverter.ToUInt16(data[1..2]));
                     break;
                 case 0x26:
                     LoadValueToR(data[1], Z80.H);
@@ -172,28 +172,298 @@ namespace z80CpuSim.CPU.Instructions
                     LoadValueToR(data[1], Z80.L);
                     break;
 
+                case 0x31:
+                    LoadValueToR(data[1..2], Z80.SP);
+                    break;
+                case 0x32:
+                    LoadRToAddress(Z80.A, BitConverter.ToUInt16(data[1..2]));
+                    break;
+                case 0x36:
+                    LoadValueToAddress(data[1], Z80.HL.GetData());
+                    break;
+                case 0x3A:
+                    LoadDataAtAddressToR(data[1..2], Z80.A);
+                    break;
+                case 0x3E:
+                    LoadValueToR(data[1], Z80.A);
+                    break;
+
+
 
                 case 0x40:
+                    // ld b, b
                     LoadRToR(Z80.B, Z80.B);
                     break;
                 case 0x41:
+                    // ld b, c
                     LoadRToR(Z80.C, Z80.B);
                     break;
                 case 0x42:
+                    // ld b, d
                     LoadRToR(Z80.D, Z80.B);
                     break;
                 case 0x43:
+                    // ld b, e
                     LoadRToR(Z80.E, Z80.B);
                     break;
                 case 0x44:
+                    // ld b, h
                     LoadRToR(Z80.H, Z80.B);
                     break;
                 case 0x45:
+                    // ld b, l
                     LoadRToR(Z80.L, Z80.B);
                     break;
                 case 0x46:
+                    // ld b, (hl)
                     LoadDataAtAddressToR(Z80.HL, Z80.B);
                     break;
+                case 0x47:
+                    // ld b, a
+                    LoadRToR(Z80.A, Z80.B);
+                    break;
+
+                case 0x48:
+                    // ld c, b
+                    LoadRToR(Z80.B, Z80.C);
+                    break;
+                case 0x49:
+                    // ld c, c
+                    LoadRToR(Z80.C, Z80.C);
+                    break;
+                case 0x4A:
+                    // ld c, d
+                    LoadRToR(Z80.D, Z80.C);
+                    break;
+                case 0x4B:
+                    // ld c, e
+                    LoadRToR(Z80.E, Z80.C);
+                    break;
+                case 0x4C:
+                    // ld c, h
+                    LoadRToR(Z80.H, Z80.C);
+                    break;
+                case 0x4D:
+                    // ld c, l
+                    LoadRToR(Z80.L, Z80.C);
+                    break;
+                case 0x4E:
+                    // ld c, (hl)
+                    LoadDataAtAddressToR(Z80.HL, Z80.C);
+                    break;
+                case 0x4F:
+                    // ld c, a
+                    LoadRToR(Z80.A, Z80.C);
+                    break;
+
+
+
+                case 0x50:
+                    // ld d, b
+                    LoadRToR(Z80.B, Z80.D);
+                    break;
+                case 0x51:
+                    // ld d, c
+                    LoadRToR(Z80.C, Z80.D);
+                    break;
+                case 0x52:
+                    // ld d, d
+                    LoadRToR(Z80.D, Z80.D);
+                    break;
+                case 0x53:
+                    // ld d, e
+                    LoadRToR(Z80.E, Z80.D);
+                    break;
+                case 0x54:
+                    // ld d, h
+                    LoadRToR(Z80.H, Z80.D);
+                    break;
+                case 0x55:
+                    // ld d, l
+                    LoadRToR(Z80.L, Z80.D);
+                    break;
+                case 0x56:
+                    // ld d, (hl)
+                    LoadDataAtAddressToR(Z80.HL, Z80.D);
+                    break;
+                case 0x57:
+                    // ld d, a
+                    LoadRToR(Z80.A, Z80.D);
+                    break;
+
+                case 0x58:
+                    // ld e, b
+                    LoadRToR(Z80.B, Z80.E);
+                    break;
+                case 0x59:
+                    // ld e, c
+                    LoadRToR(Z80.C, Z80.E);
+                    break;
+                case 0x5A:
+                    // ld e, d
+                    LoadRToR(Z80.D, Z80.E);
+                    break;
+                case 0x5B:
+                    // ld e, e
+                    LoadRToR(Z80.E, Z80.E);
+                    break;
+                case 0x5C:
+                    // ld e, h
+                    LoadRToR(Z80.H, Z80.E);
+                    break;
+                case 0x5D:
+                    // ld e, l
+                    LoadRToR(Z80.L, Z80.E);
+                    break;
+                case 0x5E:
+                    // ld e, (hl)
+                    LoadDataAtAddressToR(Z80.HL, Z80.E);
+                    break;
+                case 0x5F:
+                    // ld e, a
+                    LoadRToR(Z80.A, Z80.E);
+                    break;
+
+
+
+                case 0x60:
+                    // ld h, b
+                    LoadRToR(Z80.B, Z80.H);
+                    break;
+                case 0x61:
+                    // ld h, c
+                    LoadRToR(Z80.C, Z80.H);
+                    break;
+                case 0x62:
+                    // ld h, d
+                    LoadRToR(Z80.D, Z80.H);
+                    break;
+                case 0x63:
+                    // ld h, e
+                    LoadRToR(Z80.E, Z80.H);
+                    break;
+                case 0x64:
+                    // ld h, h
+                    LoadRToR(Z80.H, Z80.H);
+                    break;
+                case 0x65:
+                    // ld h, l
+                    LoadRToR(Z80.L, Z80.H);
+                    break;
+                case 0x66:
+                    // ld h, (hl)
+                    LoadDataAtAddressToR(Z80.HL, Z80.H);
+                    break;
+                case 0x67:
+                    // ld h, a
+                    LoadRToR(Z80.A, Z80.H);
+                    break;
+
+                case 0x68:
+                    // ld l, b
+                    LoadRToR(Z80.B, Z80.L);
+                    break;
+                case 0x69:
+                    // ld l, c
+                    LoadRToR(Z80.C, Z80.L);
+                    break;
+                case 0x6A:
+                    // ld l, d
+                    LoadRToR(Z80.D, Z80.L);
+                    break;
+                case 0x6B:
+                    // ld l, e
+                    LoadRToR(Z80.E, Z80.L);
+                    break;
+                case 0x6C:
+                    // ld l, h
+                    LoadRToR(Z80.H, Z80.L);
+                    break;
+                case 0x6D:
+                    // ld l, l
+                    LoadRToR(Z80.L, Z80.L);
+                    break;
+                case 0x6E:
+                    // ld l, (hl)
+                    LoadDataAtAddressToR(Z80.HL, Z80.L);
+                    break;
+                case 0x6F:
+                    // ld l, a
+                    LoadRToR(Z80.A, Z80.L);
+                    break;
+
+
+
+                case 0x70:
+                    // ld (hl), b
+                    LoadRToAddress(Z80.B, Z80.HL.GetData());
+                    break;
+                case 0x71:
+                    // ld (hl), c
+                    LoadRToAddress(Z80.C, Z80.HL.GetData());
+                    break;
+                case 0x72:
+                    // ld (hl), d
+                    LoadRToAddress(Z80.D, Z80.HL.GetData());
+                    break;
+                case 0x73:
+                    // ld (hl), e
+                    LoadRToAddress(Z80.E, Z80.HL.GetData());
+                    break;
+                case 0x74:
+                    // ld (hl), h
+                    LoadRToAddress(Z80.H, Z80.HL.GetData());
+                    break;
+                case 0x75:
+                    // ld (hl), l
+                    LoadRToAddress(Z80.D, Z80.HL.GetData());
+                    break;
+                case 0x77:
+                    // ld (hl), l
+                    LoadRToAddress(Z80.A, Z80.HL.GetData());
+                    break;
+
+                case 0x78:
+                    // ld a, b
+                    LoadRToR(Z80.B, Z80.A);
+                    break;
+                case 0x79:
+                    // ld a, c
+                    LoadRToR(Z80.C, Z80.A);
+                    break;
+                case 0x7A:
+                    // ld a, d
+                    LoadRToR(Z80.D, Z80.A);
+                    break;
+                case 0x7B:
+                    // ld a, e
+                    LoadRToR(Z80.E, Z80.A);
+                    break;
+                case 0x7C:
+                    // ld a, h
+                    LoadRToR(Z80.H, Z80.A);
+                    break;
+                case 0x7D:
+                    // ld a, l
+                    LoadRToR(Z80.L, Z80.A);
+                    break;
+                case 0x7E:
+                    // ld a, (hl)
+                    LoadDataAtAddressToR(Z80.HL, Z80.A);
+                    break;
+                case 0x7F:
+                    // ld a, a
+                    LoadRToR(Z80.A, Z80.A);
+                    break;
+
+
+
+                case 0xF9:
+                    // ld sp, hl
+                    LoadRToR(Z80.HL, Z80.SP);
+                    break;
+
+
 
             }
             // do the reading
@@ -206,6 +476,12 @@ namespace z80CpuSim.CPU.Instructions
             // TODO : Ticks
             i.SetData(o.GetData());
             
+        }
+        private void LoadRToR(IRegister<ushort> i, IRegister<ushort> o)
+        {
+            // TODO : Ticks
+            i.SetData(o.GetData());
+
         }
 
         private void LoadDataAtAddressToR(EightBitRegisterPair i, EightBitRegister o)
@@ -227,10 +503,11 @@ namespace z80CpuSim.CPU.Instructions
         {
             r.SetData(value);
         }
-        private void LoadValueToR(byte[] value, EightBitRegisterPair r)
+        private void LoadValueToR(byte[] value, IRegister<ushort> r)
         {
             r.SetData(BitConverter.ToUInt16(value));
         }
+        
 
         private void LoadValueToAddress(byte value, ushort adr)
         {
@@ -242,9 +519,11 @@ namespace z80CpuSim.CPU.Instructions
         {
             Z80.Z80cu.WriteMemory(adr, r.GetData());
         }
-        private void LoadRToAddress(EightBitRegisterPair, ushort adr)
+        private void LoadRToAddress(EightBitRegisterPair i, ushort adr)
         {
-
+            byte[] data = BitConverter.GetBytes(i.GetData());
+            Z80.Z80cu.WriteMemory(adr, data[0]);
+            Z80.Z80cu.WriteMemory(adr, data[1]);
         }
 
         
