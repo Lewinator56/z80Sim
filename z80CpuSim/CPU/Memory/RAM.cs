@@ -69,19 +69,9 @@ namespace z80CpuSim.CPU.Memory
             
         }
 
-        public byte[][] ToArray2D()
+        public byte[] GetData()
         {
-            byte[][] a2d = new byte[256][];
-
-            for (int i = 0; i < 256; i++ )
-            {
-                for (int j = 0; j < 256; j++)
-                {
-                    a2d[i][j] = data[i * j];
-                }
-            }
-
-            return a2d;
+            return data;
         }
 
     }

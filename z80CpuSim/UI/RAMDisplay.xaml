@@ -7,17 +7,44 @@
              xmlns:local="clr-namespace:z80CpuSim.UI"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <materialDesign:Card Background="White" materialDesign:ShadowAssist.ShadowDepth="Depth2"  UniformCornerRadius="10" Grid.Row="0" Height="auto" >
+    <materialDesign:Card Background="White" materialDesign:ShadowAssist.ShadowDepth="Depth2"  UniformCornerRadius="10" Grid.Row="0" Height="auto"  >
         <Grid  Margin="10" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Content="RAM" FontSize="20" Grid.Row="0"/>
+            <DockPanel Grid.Row="0">
+                <Label Content="RAM" FontSize="20" DockPanel.Dock="Left"/>
+                
+                <ComboBox Name="ByteGroupingList" DockPanel.Dock="Right" IsEditable="True" Width="50"  DropDownClosed="ByteGroupingList_DropDownClosed">
+                    <ComboBoxItem Content="1"/>
+                    <ComboBoxItem Content="2"/>
+                    <ComboBoxItem Content="4"/>
+                    <ComboBoxItem Content="8"/>
+                    <ComboBoxItem Content="16"/>
+                    <ComboBoxItem Content="32"/>
+                </ComboBox>
+                <Label Content="Byte Group Size: " VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
+                
+                
+                
+
+
+                <ComboBox Name="LineLengthList" DockPanel.Dock="Right" Width="50" DropDownClosed="LineLengthList_DropDownClosed">
+                    <ComboBoxItem Content="8"/>
+                    <ComboBoxItem Content="16"/>
+                    <ComboBoxItem Content="32"/>
+                    <ComboBoxItem Content="64"/>
+                    <ComboBoxItem Content="128"/>
+                    <ComboBoxItem Content="256"/>
+                </ComboBox>
+                <Label Content="Line length: " VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
+            </DockPanel>
+            
             <ScrollViewer Margin="0,0,5,0" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <Grid Name="RAMGrid" ShowGridLines="True">
+                <TextBox Name="RamBlock" FontFamily="lucida console" IsEnabled="False">
                     
-                </Grid>
+                </TextBox>
             </ScrollViewer>
         </Grid>
     </materialDesign:Card>

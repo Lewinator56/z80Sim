@@ -22,5 +22,16 @@ namespace z80CpuSim.UI
         {
             InitializeComponent();
         }
+
+        private void playExecution_Click(object sender, RoutedEventArgs e)
+        {
+            z80CpuSim.CPU.Z80CPU.instance().Z80cu.StartExecution();
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            z80CpuSim.CPU.Z80CPU.instance().SetSpeed(Math.Pow(((Slider)sender).Value, 2));
+            CpuSpeedHzLabel.Content = z80CpuSim.CPU.Z80CPU.instance().frequency.ToString() + "Hz";
+        }
     }
 }

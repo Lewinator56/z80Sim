@@ -9,7 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <materialDesign:Card Background="White" materialDesign:ShadowAssist.ShadowDepth="Depth2"  UniformCornerRadius="10" Grid.Row="0" Height="100" >
         <DockPanel DockPanel.Dock="Left" HorizontalAlignment="Stretch" Width="auto">
-            <Button Style="{DynamicResource MaterialDesignFlatButton}" Name="playExecution" Height="50" Width="50" Background="White" BorderBrush="LightGray"  Foreground="Black" Margin="10" HorizontalAlignment="Center" >
+            <Button Style="{DynamicResource MaterialDesignFlatButton}" Name="playExecution" Height="50" Width="50" Background="White" BorderBrush="LightGray"  Foreground="Black" Margin="10" HorizontalAlignment="Center" Click="playExecution_Click">
                 <StackPanel Orientation="Vertical" Margin="-10" >
                     <materialDesign:PackIcon Kind="Play" HorizontalAlignment="Center">
                         <materialDesign:PackIcon.LayoutTransform>
@@ -40,8 +40,9 @@
                 </StackPanel>
             </Button>
             <DockPanel HorizontalAlignment="Center">
-                <Slider Orientation="Horizontal" VerticalAlignment="Center" Width="200" Margin="10" Foreground="Black"></Slider>
-                <Label Name="CpuSpeedHzLabel" Content="1Hz" VerticalAlignment="Center" Margin="10"/>
+                <Label Name="CpuSpeedHzLabel" Content="1Hz" VerticalAlignment="Center" Margin="10" DockPanel.Dock="Right"/>
+                <Slider Name="SpeedSlider" Orientation="Horizontal" VerticalAlignment="Center" Width="200" Margin="10" Foreground="Black" ValueChanged="Slider_ValueChanged" Minimum="0.75" Maximum="31.6"></Slider>
+                
             </DockPanel>
         </DockPanel>
     </materialDesign:Card>

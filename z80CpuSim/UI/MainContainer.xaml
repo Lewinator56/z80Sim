@@ -42,10 +42,10 @@
                     </Grid>
 
                 </DockPanel>
-                <local:RegisterDisplay Margin="20" Grid.Row="1"/>
+                <local:RegisterDisplay x:Name="RegisterDisplayControl" Margin="20" Grid.Row="1"/>
                 
             </Grid>
-            <local:RAMDisplay Margin="20" Grid.Column="1"/>
+            <local:RAMDisplay x:Name="RamDisplayControl" Margin="20" Grid.Column="1"/>
         </Grid>
         
     </materialDesign:DialogHost>

@@ -6,7 +6,7 @@ namespace z80CpuSim.CPU
 {
     interface ICPU
     {
-        public void SetSpeed(int hertz);
+        public void SetSpeed(double hertz);
 
         public void PauseClock();
 

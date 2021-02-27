@@ -19,12 +19,12 @@ namespace z80CpuSim.UI
     /// </summary>
     public partial class RegisterDisplay : UserControl
     {
-        List<RegisterModelSource> RegiserListSource = new List<RegisterModelSource>();
+        List<RegisterModelSource> RegisterListSource = new List<RegisterModelSource>();
         public RegisterDisplay()
         {
             InitializeComponent();
             DisplayRegistersData();
-            DataGrid.ItemsSource = RegiserListSource;
+            DataGrid.ItemsSource = RegisterListSource;
 
         }
 
@@ -62,9 +62,21 @@ namespace z80CpuSim.UI
                 rms.DataIntUnsigned = rar.GetRegister().GetData();
                 rms.DataHex = rar.GetRegister().GetData().ToString("X");
 
-                RegiserListSource.Add(rms);
+                RegisterListSource.Add(rms);
 
             }
+        }
+
+        private void UpdateRegisterListData()
+        {
+            RegisterListSource.Clear();
+            DisplayRegistersData();
+        }
+
+        public void Update()
+        {
+            UpdateRegisterListData();
+            DataGrid.Items.Refresh();
         }
     }
 }

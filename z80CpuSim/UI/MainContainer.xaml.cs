@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace z80CpuSim.UI
 {
@@ -21,6 +22,23 @@ namespace z80CpuSim.UI
         public MainContainer()
         {
             InitializeComponent();
+            Thread t = new Thread(() => UIUpdateThread());
+            t.SetApartmentState(ApartmentState.STA);
+            t.Start();
+        }
+
+        public void UIUpdateThread()
+        {
+            // update the UI, loop untill told otherwise
+
+            while (true)
+            {
+                Thread.Sleep(1000);
+                this.Dispatcher.Invoke(() => { 
+                    RegisterDisplayControl.Update();
+                    RamDisplayControl.UpdateText();
+                });
+            }
         }
     }
 }

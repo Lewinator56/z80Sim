@@ -40,7 +40,7 @@ namespace z80CpuSim.CPU
         //
 
 
-        int frequency;
+        public double frequency;
         public RAM ram;
 
         // Registers
@@ -145,7 +145,7 @@ namespace z80CpuSim.CPU
             {
                 // infinite loop on this thread!
             }
-            Thread.Sleep(1000 / frequency); // I can guarantee this will cause a problem, ive never got this running at the correct time in the past, but i guess we'll just have top wait and see
+            Thread.Sleep((int)(1000 / frequency)); // I can guarantee this will cause a problem, ive never got this running at the correct time in the past, but i guess we'll just have top wait and see
 
             // check the wait state, if we need to wait, tick untill the wait pin is low
             while (wait)
@@ -158,7 +158,7 @@ namespace z80CpuSim.CPU
         
 
         // Sets the speed of the CPU in hertz, I'm not entirely certain the absolute fastest this can run, id assume its 1000hz (or 1MHz)
-        public void SetSpeed(int hertz)
+        public void SetSpeed(double hertz)
         {
             this.frequency = hertz;
         }
