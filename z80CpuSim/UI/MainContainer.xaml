@@ -23,7 +23,7 @@
 
 
 
-                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Name="openCode" Height="75" Width="75" Background="White" BorderBrush="LightGray"  Foreground="Black" Margin="10" >
+                    <Button Style="{DynamicResource MaterialDesignFlatButton}" Name="openCode" Height="75" Width="75" Background="White" BorderBrush="LightGray"  Foreground="Black" Margin="10" Click="openCode_Click">
                         <StackPanel Orientation="Vertical" Margin="-10" >
                             <materialDesign:PackIcon Kind="Code" HorizontalAlignment="Center">
                                 <materialDesign:PackIcon.LayoutTransform>
@@ -38,7 +38,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <local:CPUControl Grid.Column="0" HorizontalAlignment="Center"/>
+                        <local:CPUControl Grid.Column="0" HorizontalAlignment="Center" x:Name="CpuControlPanel"/>
                     </Grid>
 
                 </DockPanel>

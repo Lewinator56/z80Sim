@@ -16,7 +16,7 @@
             <DockPanel Grid.Row="0">
                 <Label Content="RAM" FontSize="20" DockPanel.Dock="Left"/>
                 
-                <ComboBox Name="ByteGroupingList" DockPanel.Dock="Right" IsEditable="True" Width="50"  DropDownClosed="ByteGroupingList_DropDownClosed">
+                <ComboBox Name="ByteGroupingList" DockPanel.Dock="Right"  Width="50"  DropDownClosed="ByteGroupingList_DropDownClosed">
                     <ComboBoxItem Content="1"/>
                     <ComboBoxItem Content="2"/>
                     <ComboBoxItem Content="4"/>

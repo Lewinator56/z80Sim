@@ -44,7 +44,8 @@ namespace z80CpuSim.CPU
             new Sub(),
             new Xor()
         };
-        
+
+        bool execute = false;
         
 
 
@@ -55,7 +56,18 @@ namespace z80CpuSim.CPU
         }
         public void StartExecution()
         {
-
+            // make sure the PC is 0
+            Z80.PC.SetData(0);
+            execute = true;
+            while (execute)
+            {
+                // perfomr FDE cycle
+                Fetch();
+            }
+        }
+        public void StopExecution()
+        {
+            execute = false;
         }
 
         // The reason im using, what look like fairly convoluted methods for reading and writing data to the CPU, by sampling and setting busses

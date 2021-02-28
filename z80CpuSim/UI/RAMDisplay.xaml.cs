@@ -81,7 +81,13 @@ namespace z80CpuSim.UI
                     {
                         sb.Append(i.ToString("X4") + "        ");
                     }
-                    sb.Append(BitConverter.ToString(data[j..(j + actualGroupingLength)]).Replace("-", "").PadRight((actualGroupingLength*2)+1));
+
+                    try
+                    {
+                        sb.Append(BitConverter.ToString(data[(i + j)..((i + j) + actualGroupingLength)]).Replace("-", "").PadRight((actualGroupingLength * 2) + 1));
+                    }
+                    catch { }
+                    
 
                 }
                 sb.Append("\n");

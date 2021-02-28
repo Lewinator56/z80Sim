@@ -6,6 +6,7 @@ namespace z80CpuSim.CPU.Instructions
 {
     class MiscInstructions : IInstruction
     {
+        Z80CPU Z80 = Z80CPU.instance();
         Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {
             { 0x07, 1 }, // rlca
@@ -20,7 +21,9 @@ namespace z80CpuSim.CPU.Instructions
             { 0x3F, 1 }, // ccf
             { 0x37, 1 }, // scf
 
-            { 0x76, 1 } // halt
+            { 0x76, 1 }, // halt
+
+            { 0x00, 1 } // no operation
         };
         public bool CanHandle(byte opcode)
         {
@@ -29,7 +32,12 @@ namespace z80CpuSim.CPU.Instructions
 
         public void Handle(byte[] data)
         {
-
+            switch (data[0])
+            {
+                case 0x00:
+                    // do nothing
+                    break;
+            }
         }
 
         public int GetBytesToRead(byte opcode)

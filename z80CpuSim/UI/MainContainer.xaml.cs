@@ -40,5 +40,10 @@ namespace z80CpuSim.UI
                 });
             }
         }
+
+        private void openCode_Click(object sender, RoutedEventArgs e)
+        {
+            CpuControlPanel.EnableControlsForNewExecution();
+        }
     }
 }

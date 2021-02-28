@@ -28,8 +28,14 @@ namespace z80CpuSim
             //ta.Test();
             //Tests.TestSub ts = new Tests.TestSub();
             //ts.Test();
-            Tests.TestReset tr = new Tests.TestReset();
-            tr.Test();
+            //Tests.TestReset tr = new Tests.TestReset();
+            //tr.Test();
+            Z80CPU.instance().Setup();
+            Z80CPU.instance().ram.SetAddress(10, 10);
+            Z80CPU.instance().ram.SetAddress(0, 6);
+            Z80CPU.instance().ram.SetAddress(1, 10);
+            Z80CPU.instance().ram.SetAddress(2, 128);
+            
             
         }
 
