@@ -23,6 +23,7 @@ namespace z80CpuSim.UI
         byte[] data;
         int displayLength = 256;
         int grouping = 1;
+        z80CpuSim.CPU.Z80CPU Z80 = z80CpuSim.CPU.Z80CPU.instance();
         public RAMDisplay()
         {
             InitializeComponent();
@@ -79,12 +80,20 @@ namespace z80CpuSim.UI
                 {
                     if (j == 0)
                     {
-                        sb.Append(i.ToString("X4") + "        ");
+                        sb.Append(i.ToString("X4") + "       ");
                     }
 
                     try
                     {
-                        sb.Append(BitConverter.ToString(data[(i + j)..((i + j) + actualGroupingLength)]).Replace("-", "").PadRight((actualGroupingLength * 2) + 1));
+                        ushort pcv = Z80.PC.GetData();
+                        bool instanceCheck = false;
+                        if (pcv >= (i + j) && pcv <= ((i + j) + actualGroupingLength - 1))
+                        {
+                            instanceCheck = true;
+                        }
+                        sb.Append(BitConverter.ToString(data[(i + j)..((i + j) + actualGroupingLength)]).Replace("-", "").PadLeft((actualGroupingLength * 2) + 1, (instanceCheck? '►' : ' ')));
+
+
                     }
                     catch { }
                     

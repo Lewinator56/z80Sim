@@ -42,7 +42,7 @@
             </DockPanel>
             
             <ScrollViewer Margin="0,0,5,0" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <TextBox Name="RamBlock" FontFamily="lucida console" IsEnabled="False">
+                <TextBox Name="RamBlock" FontFamily="Lucida console" IsEnabled="False">
                     
                 </TextBox>
             </ScrollViewer>
