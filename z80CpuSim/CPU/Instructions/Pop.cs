@@ -55,14 +55,14 @@ namespace z80CpuSim.CPU.Instructions
             // increment the stack pointer
             Z80.SP.SetData((ushort)(Z80.SP.GetData() + 1));
 
-            //read the memory at SP into the upper part of the register pair
-            ebrp.upper.SetData(Z80.Z80cu.ReadMemory(Z80.SP.GetData()));
+            //read the memory at SP into the lower part of the register pair
+            ebrp.lower.SetData(Z80.Z80cu.ReadMemory(Z80.SP.GetData()));
 
             // increment the stack pointer (again)
             Z80.SP.SetData((ushort)(Z80.SP.GetData() + 1));
 
-            // read the memory at SP into the lower part of the register pair
-            ebrp.lower.SetData(Z80.Z80cu.ReadMemory(Z80.SP.GetData()));
+            // read the memory at SP into the upper part of the register pair
+            ebrp.upper.SetData(Z80.Z80cu.ReadMemory(Z80.SP.GetData()));
         }
 
         // no flag states are set in this operation

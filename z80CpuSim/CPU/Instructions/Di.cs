@@ -10,6 +10,7 @@ namespace z80CpuSim.CPU.Instructions
         Dictionary<byte, int> opcodes = new Dictionary<byte, int>
         {
             { 0xf3, 1 },
+            { 0xFB, 1 }
 
         };
         public bool CanHandle(byte opcode)
@@ -19,8 +20,18 @@ namespace z80CpuSim.CPU.Instructions
 
         public void Handle(byte[] data)
         {
-            Z80.IFF1 = false;
-            Z80.IFF2 = false;
+            switch (data[0])
+            {
+                case 0xF3:
+                    Z80.IFF1 = false;
+                    Z80.IFF2 = false;
+                    break;
+                case 0xFB:
+                    Z80.IFF1 = true;
+                    Z80.IFF2 = true;
+                    break;
+            }
+            
         }
         public int GetBytesToRead(byte opcode)
         {

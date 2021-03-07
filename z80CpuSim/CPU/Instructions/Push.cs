@@ -56,14 +56,14 @@ namespace z80CpuSim.CPU.Instructions
             // Decrement the stack pointer
             Z80.SP.SetData((ushort)(Z80.SP.GetData() - 1));
 
-            // write the lower byte of the register pair to the first address
-            Z80.Z80cu.WriteMemory(Z80.SP.GetData(), ebrp.lower.GetData());
+            // write the upper byte of the register pair to the first address
+            Z80.Z80cu.WriteMemory(Z80.SP.GetData(), ebrp.upper.GetData());
 
             // decrement the stack pointer (again)
             Z80.SP.SetData((ushort)(Z80.SP.GetData() - 1));
 
-            // write the upper byte of the register pair to the next address
-            Z80.Z80cu.WriteMemory(Z80.SP.GetData(), ebrp.upper.GetData());
+            // write the lower byte of the register pair to the next address
+            Z80.Z80cu.WriteMemory(Z80.SP.GetData(), ebrp.lower.GetData());
         }
 
         // no flag states are set in this operation

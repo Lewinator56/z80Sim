@@ -39,10 +39,12 @@ namespace z80CpuSim.CPU.Instructions
                     // do nothing
                     break;
                 case 0x07:
-
+                    Z80.Z80cu.SetFlagBit(FlagBit.Carry, (Z80.A.GetData() & 0x80) == 0x80);
+                    Z80.A.SetData((byte)(Z80.A.GetData() << 1));
                     break;
                 case 0x0F:
-
+                    Z80.Z80cu.SetFlagBit(FlagBit.Carry, (Z80.A.GetData() & 0x01) == 0x01);
+                    Z80.A.SetData((byte)(Z80.A.GetData() >> 1));
                     break;
                 case 0x1F:
                     cFlag = Z80.Z80cu.GetFlagBit(FlagBit.Carry);
@@ -55,16 +57,16 @@ namespace z80CpuSim.CPU.Instructions
                     Z80.A.SetData((byte)((Z80.A.GetData() << 1) | (cFlag ? 0x01 : 0x00)));
                     break;
                 case 0x2F:
-
+                    Z80.A.SetData((byte)~Z80.A.GetData());
                     break;
                 case 0x27:
-
+                    AdjustBCD();
                     break;
                 case 0x3F:
-
+                    Z80.Z80cu.SetFlagBit(FlagBit.Carry, !Z80.Z80cu.GetFlagBit(FlagBit.Carry));
                     break;
                 case 0x37:
-
+                    Z80.Z80cu.SetFlagBit(FlagBit.Carry, true);
                     break;
                 case 0x76:
                     Z80.Z80cu.StopExecution();
@@ -75,6 +77,21 @@ namespace z80CpuSim.CPU.Instructions
         public int GetBytesToRead(byte opcode)
         {
             return opcodes.GetValueOrDefault(opcode);
+        }
+
+        private void AdjustBCD()
+        {
+            // WHY DOES THE Z80 HAVE THIS???????!!!!!!!!!! literally just making me do more work
+            // remember to explain BCD (binary coded decimal) in the report.
+            // encodes binary as a 'decima' representation, so each 4 bits represents its decimal equivalent, its basically
+            // base 10 hex. so 15 = 0001 0101 (1, 5), yeah, I dont know what its for either.
+            bool carry = Z80.Z80cu.GetFlagBit(FlagBit.Carry);
+            bool halfCarry = Z80.Z80cu.GetFlagBit(FlagBit.HalfCarry);
+            bool sub = Z80.Z80cu.GetFlagBit(FlagBit.Subtract);
+            byte accVal = Z80.A.GetData();
+
+            // now for the logic - ok i dont actually have any clue how to do this
+            
         }
     }
 }
