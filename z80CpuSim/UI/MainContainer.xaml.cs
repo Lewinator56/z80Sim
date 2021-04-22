@@ -34,7 +34,7 @@ namespace z80CpuSim.UI
 
             while (true)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
                 this.Dispatcher.Invoke(() => { 
                     RegisterDisplayControl.Update();
                     RamDisplayControl.UpdateText();
