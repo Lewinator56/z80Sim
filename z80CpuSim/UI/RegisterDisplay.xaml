@@ -12,13 +12,27 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Label Content="Registers" FontSize="20" Grid.Row="0"/>
             <ScrollViewer Margin="0,0,5,0" Grid.Row="1">
                 <DataGrid Name="DataGrid" HorizontalAlignment="Stretch" Height="auto" Margin="0,0,0,0" VerticalAlignment="Top" Width="auto" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Name, Mode=OneWay}" Width="auto" Header="Register"/>
-                        <DataGridTextColumn Binding="{Binding Size, Mode=OneWay}" Width="auto" Header="Size (bits)"/>
+                        <DataGridTextColumn Binding="{Binding Size, Mode=OneWay}" Width="auto" Header="Size (bytes)"/>
+                        <DataGridTextColumn Binding="{Binding DataIntUnsigned, Mode=OneWay}" Width="auto" Header="Data (uint)"/>
+                        <DataGridTextColumn Binding="{Binding DataHex, Mode=OneWay}" Width="auto" Header="Data (hex)"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+
+            <Label Content="Buses" FontSize="20" Grid.Row="2"/>
+            <ScrollViewer Margin="0,0,5,0" Grid.Row="3">
+                <DataGrid Name="DataGridBuses" HorizontalAlignment="Stretch" Height="auto" Margin="0,0,0,0" VerticalAlignment="Top" Width="auto" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Name, Mode=OneWay}" Width="auto" Header="Bus"/>
+                        <DataGridTextColumn Binding="{Binding Size, Mode=OneWay}" Width="auto" Header="Size (bytes)"/>
                         <DataGridTextColumn Binding="{Binding DataIntUnsigned, Mode=OneWay}" Width="auto" Header="Data (uint)"/>
                         <DataGridTextColumn Binding="{Binding DataHex, Mode=OneWay}" Width="auto" Header="Data (hex)"/>
                     </DataGrid.Columns>
