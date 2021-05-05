@@ -18,7 +18,7 @@
                 <DataGrid Name="DataGrid" HorizontalAlignment="Stretch" Height="auto" Margin="0,0,0,0" VerticalAlignment="Top" Width="auto" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Name, Mode=OneWay}" Width="auto" Header="Register"/>
-                        <DataGridTextColumn Binding="{Binding Size, Mode=OneWay}" Width="auto" Header="Size (bits)"/>
+                        <DataGridTextColumn Binding="{Binding Size, Mode=OneWay}" Width="auto" Header="Size (bytes)"/>
                         <DataGridTextColumn Binding="{Binding DataIntUnsigned, Mode=OneWay}" Width="auto" Header="Data (uint)"/>
                         <DataGridTextColumn Binding="{Binding DataHex, Mode=OneWay}" Width="auto" Header="Data (hex)"/>
                     </DataGrid.Columns>

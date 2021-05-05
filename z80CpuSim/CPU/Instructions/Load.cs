@@ -164,7 +164,7 @@ namespace z80CpuSim.CPU.Instructions
                     break;
                 case 0x26:
                     LoadValueToR(data[1], Z80.H);
-                    break;
+                    break;               
                 case 0x2A:
                     LoadDataAtAddressToR(data[1..2], Z80.HL);
                     break;

@@ -38,23 +38,6 @@ namespace z80CpuSim.UI
 
             foreach (RegisterAbstraction rar in ral)
             {
-                /**
-                Label l = new Label();
-                l.Margin = new Thickness(10);
-                l.Content = rar.GetRegisterName();
-
-                Label data = new Label();
-                data.Margin = new Thickness(10);
-                data.Content = rar.GetRegisterData();
-
-                StackPanel sp = new StackPanel();
-                DockPanel.SetDock(sp, Dock.Top);
-                sp.Orientation = Orientation.Horizontal;
-                sp.Children.Add(l);
-                sp.Children.Add(data);
-
-                RegList.Children.Add(sp);
-                **/
                 RegisterModelSource rms = new RegisterModelSource();
                 rms.Type = rar.GetRegisterType();
                 rms.Name = rar.GetRegisterName();
