@@ -125,7 +125,7 @@ namespace z80CpuSim.CPU.Instructions
 
             switch (data[0]) {
                 case 0x01:
-                    LoadValueToR(data[1..2], Z80.BC);
+                    LoadValueToR(data[1..3], Z80.BC);
                     break;
                 case 0x02:
                     LoadRToAddress(Z80.A, Z80.BC.GetData());
@@ -141,7 +141,7 @@ namespace z80CpuSim.CPU.Instructions
                     break;
 
                 case 0x11:
-                    LoadValueToR(data[1..2], Z80.DE);
+                    LoadValueToR(data[1..3], Z80.DE);
                     break;
                 case 0x12:
                     LoadRToAddress(Z80.A, Z80.DE.GetData());
@@ -157,32 +157,32 @@ namespace z80CpuSim.CPU.Instructions
                     break;
 
                 case 0x21:
-                    LoadValueToR(data[1..2], Z80.HL);
+                    LoadValueToR(data[1..3], Z80.HL);
                     break;
                 case 0x22:
-                    LoadRToAddress(Z80.HL, BitConverter.ToUInt16(data[1..2]));
+                    LoadRToAddress(Z80.HL, BitConverter.ToUInt16(data[1..3]));
                     break;
                 case 0x26:
                     LoadValueToR(data[1], Z80.H);
                     break;               
                 case 0x2A:
-                    LoadDataAtAddressToR(data[1..2], Z80.HL);
+                    LoadDataAtAddressToR(data[1..3], Z80.HL);
                     break;
                 case 0x2E:
                     LoadValueToR(data[1], Z80.L);
                     break;
 
                 case 0x31:
-                    LoadValueToR(data[1..2], Z80.SP);
+                    LoadValueToR(data[1..3], Z80.SP);
                     break;
                 case 0x32:
-                    LoadRToAddress(Z80.A, BitConverter.ToUInt16(data[1..2]));
+                    LoadRToAddress(Z80.A, BitConverter.ToUInt16(data[1..3]));
                     break;
                 case 0x36:
                     LoadValueToAddress(data[1], Z80.HL.GetData());
                     break;
                 case 0x3A:
-                    LoadDataAtAddressToR(data[1..2], Z80.A);
+                    LoadDataAtAddressToR(data[1..3], Z80.A);
                     break;
                 case 0x3E:
                     LoadValueToR(data[1], Z80.A);

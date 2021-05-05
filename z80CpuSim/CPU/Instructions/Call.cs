@@ -33,31 +33,31 @@ namespace z80CpuSim.CPU.Instructions
             switch (data[0])
             {
                 case 0xC4:
-                    CallConditional(FlagBit.Zero, false, data[1..2]);
+                    CallConditional(FlagBit.Zero, false, data[1..3]);
                     break;
                 case 0xCC:
-                    CallConditional(FlagBit.Zero, true, data[1..2]);
+                    CallConditional(FlagBit.Zero, true, data[1..3]);
                     break;
                 case 0xCE:
-                    Callnn(data[1..2]);
+                    Callnn(data[1..3]);
                     break;
                 case 0xD4:
-                    CallConditional(FlagBit.Carry, false, data[1..2]);
+                    CallConditional(FlagBit.Carry, false, data[1..3]);
                     break;
                 case 0xDC:
-                    CallConditional(FlagBit.Carry, true, data[1..2]);
+                    CallConditional(FlagBit.Carry, true, data[1..3]);
                     break;
                 case 0xE4:
-                    CallConditional(FlagBit.Parity, false, data[1..2]);
+                    CallConditional(FlagBit.Parity, false, data[1..3]);
                     break;
                 case 0xEC:
-                    CallConditional(FlagBit.Parity, true, data[1..2]);
+                    CallConditional(FlagBit.Parity, true, data[1..3]);
                     break;
                 case 0xF4:
-                    CallConditional(FlagBit.Sign, false, data[1..2]);
+                    CallConditional(FlagBit.Sign, false, data[1..3]);
                     break;
                 case 0xFC:
-                    CallConditional(FlagBit.Sign, true, data[1..2]);
+                    CallConditional(FlagBit.Sign, true, data[1..3]);
                     break;
             }
         }

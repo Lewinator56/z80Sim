@@ -197,6 +197,14 @@ namespace z80CpuSim.CPU
             return regList;
         }
 
+        public List<RegisterAbstraction> GetBusList()
+        {
+            List<RegisterAbstraction> busList = new List<RegisterAbstraction>();
+            busList.Add(new RegisterAbstraction(dataBus, "Data Bus"));
+            busList.Add(new RegisterAbstraction(addressBus, "Address Bus"));
+            return busList;
+        }
+
        
 
     }

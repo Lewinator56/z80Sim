@@ -35,34 +35,34 @@ namespace z80CpuSim.CPU.Instructions
             switch (data[0])
             {
                 case 0xC2:
-                    JumpToAddressConditional(data[1..2], FlagBit.Zero, false);
+                    JumpToAddressConditional(data[1..3], FlagBit.Zero, false);
                     break;
                 case 0xC3:
-                    JumpToAddress(data[1..2]);
+                    JumpToAddress(data[1..3]);
                     break;
                 case 0xCA:
-                    JumpToAddressConditional(data[1..2], FlagBit.Zero, true);
+                    JumpToAddressConditional(data[1..3], FlagBit.Zero, true);
                     break;
                 case 0xD2:
-                    JumpToAddressConditional(data[1..2], FlagBit.Carry, false);
+                    JumpToAddressConditional(data[1..3], FlagBit.Carry, false);
                     break;
                 case 0xDA:
-                    JumpToAddressConditional(data[1..2], FlagBit.Carry, true);
+                    JumpToAddressConditional(data[1..3], FlagBit.Carry, true);
                     break;
                 case 0xE2:
-                    JumpToAddressConditional(data[1..2], FlagBit.Parity, false);
+                    JumpToAddressConditional(data[1..3], FlagBit.Parity, false);
                     break;
                 case 0xE9:
                     JumpToHL();
                     break;
                 case 0xEA:
-                    JumpToAddressConditional(data[1..2], FlagBit.Parity, true);
+                    JumpToAddressConditional(data[1..3], FlagBit.Parity, true);
                     break;
                 case 0xF2:
-                    JumpToAddressConditional(data[1..2], FlagBit.Sign, false);
+                    JumpToAddressConditional(data[1..3], FlagBit.Sign, false);
                     break;
                 case 0xFA:
-                    JumpToAddressConditional(data[1..2], FlagBit.Sign, true);
+                    JumpToAddressConditional(data[1..3], FlagBit.Sign, true);
                     break;
             }
         }
