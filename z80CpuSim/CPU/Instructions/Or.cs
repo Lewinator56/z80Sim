@@ -59,7 +59,7 @@ namespace z80CpuSim.CPU.Instructions
                 case 0xB7:
                     OrRWithA(Z80.A);
                     break;
-                case 0XF6:
+                case 0xF6:
                     OrValueWithA(data[1]);
                     break;
             }

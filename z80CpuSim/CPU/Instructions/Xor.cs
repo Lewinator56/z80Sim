@@ -32,7 +32,36 @@ namespace z80CpuSim.CPU.Instructions
 
         public void Handle(byte[] data)
         {
-
+            switch (data[0])
+            {
+                case 0xA8:
+                    XorRWithA(Z80.B);
+                    break;
+                case 0xA9:
+                    XorRWithA(Z80.C);
+                    break;
+                case 0xAA:
+                    XorRWithA(Z80.D);
+                    break;
+                case 0xAB:
+                    XorRWithA(Z80.E);
+                    break;
+                case 0xAC:
+                    XorRWithA(Z80.H);
+                    break;
+                case 0xAD:
+                    XorRWithA(Z80.L);
+                    break;
+                case 0xAE:
+                    XorAddressWithA();
+                    break;
+                case 0xAF:
+                    XorRWithA(Z80.A);
+                    break;
+                case 0xEE:
+                    XorValueWithA(data[1]);
+                    break;
+            }
         }
         public int GetBytesToRead(byte opcode)
         {

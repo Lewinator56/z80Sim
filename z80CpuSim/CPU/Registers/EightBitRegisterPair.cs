@@ -30,7 +30,7 @@ namespace z80CpuSim.CPU.Registers
             // changed to eliminate some of the uncertainties about endiness
             byte lowerByte = Convert.ToByte(lower.GetData());
             byte upperByte = Convert.ToByte(upper.GetData());
-            byte[] toReturn = { lowerByte, upperByte };
+            byte[] toReturn = { upperByte, lowerByte };
             return BitConverter.ToUInt16(toReturn);
         }
 
@@ -38,8 +38,8 @@ namespace z80CpuSim.CPU.Registers
         public void SetData(ushort data)
         {
             byte[] bytes = BitConverter.GetBytes(data);
-            lower.SetData((byte)bytes[0]);
-            upper.SetData((byte)bytes[1]);
+            lower.SetData((byte)bytes[1]);
+            upper.SetData((byte)bytes[0]);
         }
 
 
