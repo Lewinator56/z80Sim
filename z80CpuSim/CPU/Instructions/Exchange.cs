@@ -56,9 +56,9 @@ namespace z80CpuSim.CPU.Instructions
             Z80.Z80cu.WriteMemory(Z80.SP.GetData(), Z80.L.GetData());
             Z80.Z80cu.WriteMemory((ushort)(Z80.SP.GetData() + 1), Z80.H.GetData());
             Z80.Tick();
-            Z80.L.SetData(lower);
+            Z80.L.SetData(upper);
             Z80.Tick();
-            Z80.H.SetData(upper);
+            Z80.H.SetData(lower);
         }
         private void ExchangeAF()
         {
