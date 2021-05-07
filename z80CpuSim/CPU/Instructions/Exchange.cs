@@ -47,18 +47,18 @@ namespace z80CpuSim.CPU.Instructions
         private void ExchangeSP() // this is very very likely wrong, so i need to test it
         {
             // get the data at (sp)
-            byte upper = Z80.Z80cu.ReadMemory(Z80.SP.GetData());
+            byte lower = Z80.Z80cu.ReadMemory(Z80.SP.GetData());
             // get the data at (sp + 1)
             Z80.Tick();
-            byte lower = Z80.Z80cu.ReadMemory((ushort)(Z80.SP.GetData() + 1));
+            byte upper = Z80.Z80cu.ReadMemory((ushort)(Z80.SP.GetData() + 1));
 
             //set the data at memory locations
             Z80.Z80cu.WriteMemory(Z80.SP.GetData(), Z80.L.GetData());
             Z80.Z80cu.WriteMemory((ushort)(Z80.SP.GetData() + 1), Z80.H.GetData());
             Z80.Tick();
-            Z80.L.SetData(upper);
+            Z80.L.SetData(lower);
             Z80.Tick();
-            Z80.H.SetData(lower);
+            Z80.H.SetData(upper);
         }
         private void ExchangeAF()
         {

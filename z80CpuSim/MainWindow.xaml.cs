@@ -34,8 +34,16 @@ namespace z80CpuSim
             //ti.Test();
             //Tests.TestDec td = new Tests.TestDec();
             //td.Test();
-            Tests.TestExchange te = new Tests.TestExchange();
-            te.Test();
+            //Tests.TestExchange te = new Tests.TestExchange();
+            //te.Test();
+            //Tests.TestCall tc = new Tests.TestCall();
+            //tc.Test();
+            //Tests.TestPush tps = new Tests.TestPush();
+            //tps.Test();
+            //Tests.TestPop tp = new Tests.TestPop();
+            //tp.Test();
+            Tests.TestReturn trt = new Tests.TestReturn();
+            trt.Test();
             Z80CPU.instance().Setup();
             //Z80CPU.instance().ram.SetAddress(10, 10);
             //Z80CPU.instance().ram.SetAddress(0, 6);

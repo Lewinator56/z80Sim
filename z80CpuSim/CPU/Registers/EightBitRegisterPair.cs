@@ -16,7 +16,7 @@ namespace z80CpuSim.CPU.Registers
         public EightBitRegister lower;
         public EightBitRegister upper;
 
-        public EightBitRegisterPair(EightBitRegister lower, EightBitRegister upper)
+        public EightBitRegisterPair(EightBitRegister upper, EightBitRegister lower)
         {
             this.lower = lower;
             this.upper = upper;
@@ -30,7 +30,7 @@ namespace z80CpuSim.CPU.Registers
             // changed to eliminate some of the uncertainties about endiness
             byte lowerByte = Convert.ToByte(lower.GetData());
             byte upperByte = Convert.ToByte(upper.GetData());
-            byte[] toReturn = { upperByte, lowerByte };
+            byte[] toReturn = { lowerByte, upperByte };
             return BitConverter.ToUInt16(toReturn);
         }
 
@@ -38,8 +38,8 @@ namespace z80CpuSim.CPU.Registers
         public void SetData(ushort data)
         {
             byte[] bytes = BitConverter.GetBytes(data);
-            lower.SetData((byte)bytes[1]);
-            upper.SetData((byte)bytes[0]);
+            lower.SetData((byte)bytes[0]);
+            upper.SetData((byte)bytes[1]);
         }
 
 

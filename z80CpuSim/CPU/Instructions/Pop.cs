@@ -52,8 +52,7 @@ namespace z80CpuSim.CPU.Instructions
             // initial M-cycle takes 5 ticks rather than 4, this is the delay for that 5th tick
             Z80.Tick();
 
-            // increment the stack pointer
-            Z80.SP.SetData((ushort)(Z80.SP.GetData() + 1));
+            
 
             //read the memory at SP into the lower part of the register pair
             ebrp.lower.SetData(Z80.Z80cu.ReadMemory(Z80.SP.GetData()));
@@ -63,6 +62,9 @@ namespace z80CpuSim.CPU.Instructions
 
             // read the memory at SP into the upper part of the register pair
             ebrp.upper.SetData(Z80.Z80cu.ReadMemory(Z80.SP.GetData()));
+
+            // increment the stack pointer
+            Z80.SP.SetData((ushort)(Z80.SP.GetData() + 1));
         }
 
         // no flag states are set in this operation

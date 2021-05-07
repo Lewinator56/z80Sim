@@ -74,7 +74,7 @@ namespace z80CpuSim.CPU.Instructions
                 byte lower = Z80.Z80cu.ReadMemory(Z80.SP.GetData());
                 
                 Z80.SP.SetData((ushort)(Z80.SP.GetData() + 1));
-                byte upper = Z80.Z80cu.ReadMemory(Z80.PC.GetData());
+                byte upper = Z80.Z80cu.ReadMemory(Z80.SP.GetData());
                 Z80.SP.SetData((ushort)(Z80.SP.GetData() + 1));
                 Z80.PC.SetData(BitConverter.ToUInt16(new byte[] { lower, upper }));
             }
@@ -85,7 +85,7 @@ namespace z80CpuSim.CPU.Instructions
             byte lower = Z80.Z80cu.ReadMemory(Z80.SP.GetData());
 
             Z80.SP.SetData((ushort)(Z80.SP.GetData() + 1));
-            byte upper = Z80.Z80cu.ReadMemory(Z80.PC.GetData());
+            byte upper = Z80.Z80cu.ReadMemory(Z80.SP.GetData());
             Z80.SP.SetData((ushort)(Z80.SP.GetData() + 1));
             Z80.PC.SetData(BitConverter.ToUInt16(new byte[] { lower, upper }));
 

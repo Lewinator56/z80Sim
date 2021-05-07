@@ -38,7 +38,7 @@ namespace z80CpuSim.CPU.Instructions
                 case 0xCC:
                     CallConditional(FlagBit.Zero, true, data[1..3]);
                     break;
-                case 0xCE:
+                case 0xCD:
                     Callnn(data[1..3]);
                     break;
                 case 0xD4:
@@ -76,7 +76,7 @@ namespace z80CpuSim.CPU.Instructions
             // Sort out timings, i really have NO idea whats going on with them here
             //
             // read the PC into a byte array
-            byte[] pca = BitConverter.GetBytes(Z80.PC.GetData());
+            byte[] pca = BitConverter.GetBytes(Z80.PC.GetData() + 3);
             // push PC to top of the memory stack
             //
             //----------------------------------------------------------------------
@@ -112,7 +112,7 @@ namespace z80CpuSim.CPU.Instructions
             if (Z80.Z80cu.GetFlagBit(flag) == condition)
             {
                 
-                byte[] pca = BitConverter.GetBytes(Z80.PC.GetData());
+                byte[] pca = BitConverter.GetBytes(Z80.PC.GetData() + 3);
                 // push PC to top of the memory stack
                 //
                 //----------------------------------------------------------------------
